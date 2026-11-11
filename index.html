@@ -24,6 +24,8 @@
     color:var(--ink); overflow-x:hidden; -webkit-tap-highlight-color:transparent;
   }
   #petals{position:fixed;inset:0;pointer-events:none;z-index:5}
+  main{cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
+  main img{-webkit-user-drag:none;pointer-events:none}
 
   /* ---------- envelope intro ---------- */
   #intro{
@@ -296,7 +298,12 @@ function heartsAt(x,y){
     s:16+Math.random()*16, t:-i*5, life:70+Math.random()*40, f:.05+Math.random()*.05, ph:Math.random()*6.28,
     sway:.2+Math.random()*.4, o:.85+Math.random()*.15});
 }
-addEventListener('pointerdown', e=>{ if(intro.classList.contains('gone')) heartsAt(e.clientX,e.clientY); }, {passive:true});
+addEventListener('pointerdown', e=>{
+  if(!intro.classList.contains('gone')) return;
+  if(e.target.closest('button,a,.btn')) return;            // الأزرار والروابط لها وظائفها
+  heartsAt(e.clientX,e.clientY);
+  if(navigator.vibrate) try{ navigator.vibrate(8); }catch(_){}
+}, {passive:true});
 
 /* ===== زقزقة عصافير مولّدة (بدون ملفات) ===== */
 let actx, musicOn=false, musicTimer, master;
