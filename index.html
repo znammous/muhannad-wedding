@@ -475,7 +475,7 @@ tickCd();
 
 /* ===== أزرار ===== */
 const toast=t=>{ const el=document.getElementById('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),2400); };
-const WISHES=['بارك الله لكما وبارك عليكما وجمع بينكما في خير 💜','ألف مبروك يا مهند ودعاء 🎉','بالرفاه والبنين إن شاء الله 🌸','عقبال الفرحة الكبيرة 💐'];
+const WISHES=['بارك الله لكما وبارك عليكما وجمع بينكما في خير 💜','ألف مبروك يا مهند ودعاء 🎉','عقبال الفرحة الكبيرة 💐'];
 let wi=0;
 document.getElementById('celebrate').onclick=e=>{ const r=e.target.getBoundingClientRect(); burst(r.left+r.width/2,r.top,110); toast(WISHES[wi++%WISHES.length]); };
 document.getElementById('heart').onclick=e=>{ const h=e.currentTarget, r=h.getBoundingClientRect(); h.classList.remove('unite'); void h.offsetWidth; h.classList.add('unite'); setTimeout(()=>{ burst(r.left+r.width/2,r.top+r.height/2,70); heartsAt(r.left+r.width/2,r.top+r.height/2); },420); };
