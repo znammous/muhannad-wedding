@@ -60,8 +60,8 @@
       <div class="g-panel" id="g-menu"><div class="g-card">
         <h3>رمية حب 💐</h3>
         <p>تبادلوا الورد والحلوى بين العروسين!<br>اسحب إصبعك للخلف ثم أفلت للرمي، وانتبه للرياح.<br>كل رمية يلتقطها الطرف الآخر تملأ قلب الحب 💜</p>
-        <button data-p="m">العب كـ مهند</button>
-        <button data-p="d">العب كـ دعاء</button>
+        <button data-p="m">العب كالعريس 🤵</button>
+        <button data-p="d">العب كالعروس 👰</button>
         <button class="ghost" data-p="2">لاعبان على نفس الجهاز</button>
       </div></div>
       <div class="g-panel g-hidden" id="g-win"><div class="g-card">
