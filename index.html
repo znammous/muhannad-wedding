@@ -8,6 +8,21 @@
 <meta property="og:title" content="دعوة زفاف مهند ودعاء 💜">
 <meta property="og:description" content="يسعدنا حضوركم يوم السبت 2026.11.28 — الصالة الدمشقية">
 <meta name="theme-color" content="#f3edf5">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://znammous.github.io/muhannad-wedding/">
+<meta property="og:site_name" content="زفاف مهند ودعاء">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:image" content="https://znammous.github.io/muhannad-wedding/og.jpg?v=1">
+<meta property="og:image:secure_url" content="https://znammous.github.io/muhannad-wedding/og.jpg?v=1">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="دعوة زفاف مهند ودعاء — السبت 2026.11.28 — الصالة الدمشقية">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="دعوة زفاف مهند ودعاء 💜">
+<meta name="twitter:description" content="يسعدنا حضوركم يوم السبت 2026.11.28 — الصالة الدمشقية">
+<meta name="twitter:image" content="https://znammous.github.io/muhannad-wedding/og.jpg?v=1">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💜</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500&family=Reem+Kufi:wght@500;600&display=swap" rel="stylesheet">
@@ -17,13 +32,13 @@
     --accent2:#b597cc; --line:#a58bbd; --card:#fbf8fc;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
+  html,body{height:100%;overflow-x:hidden}
   body{
     font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;
     background:radial-gradient(120% 80% at 50% 0%,#fbf7fc 0%,var(--bg) 55%,var(--bg2) 100%);
     color:var(--ink); overflow-x:hidden; -webkit-tap-highlight-color:transparent;
   }
-  #petals{position:fixed;inset:0;pointer-events:none;z-index:5}
+  #petals{position:fixed;top:0;left:0;width:100vw;height:100vh;height:100dvh;pointer-events:none;z-index:5}
   main{cursor:pointer;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
   main img{-webkit-user-drag:none;pointer-events:none}
 
@@ -255,7 +270,7 @@ const EVENT_DATE = new Date(2026, 10, 28, 0, 0, 0); // 28 نوفمبر 2026
 const cv = document.getElementById('petals'), cx = cv.getContext('2d');
 let W, H, petals = [], confetti = [], hearts = [];
 const COLORS = ['#d9c2e8','#c7a7dc','#efd3e0','#e7c6d4','#b99ad0','#f3e3ee'];
-function resize(){ const r = devicePixelRatio||1; W=innerWidth; H=innerHeight; cv.width=W*r; cv.height=H*r; cx.setTransform(r,0,0,r,0,0); }
+function resize(){ const r = devicePixelRatio||1; W=document.documentElement.clientWidth; H=innerHeight; cv.width=W*r; cv.height=H*r; cx.setTransform(r,0,0,r,0,0); }
 addEventListener('resize', resize); resize();
 function mkPetal(top){ return {x:Math.random()*W, y:top?-20:Math.random()*H, s:6+Math.random()*9,
   vy:.4+Math.random()*.9, vx:-.3+Math.random()*.6, a:Math.random()*6.28, va:-.02+Math.random()*.04,
