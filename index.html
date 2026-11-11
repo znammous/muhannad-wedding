@@ -92,7 +92,14 @@
   .rv{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s ease}
   .rv.in{opacity:1;transform:none}
   .ayah{width:min(100%,430px);display:block;margin:0 auto}
-  .lead{margin-top:26px;font-size:clamp(17px,4.6vw,21px);line-height:1.8;color:var(--ink)}
+  .hosts{margin-top:26px}
+  .clan{font-size:clamp(18px,5vw,22px);color:var(--ink);letter-spacing:.3px}
+  .hosts-top{font-size:clamp(16px,4.4vw,19px);color:var(--soft);margin:14px 0 6px}
+  .fathers{display:flex;flex-direction:column;align-items:center;gap:4px}
+  .fa{white-space:nowrap}
+  .fa .ttl{font-size:clamp(15px,4.2vw,18px);color:var(--accent);margin-left:6px}
+  .fa .fn{font-family:"Reem Kufi";font-weight:600;font-size:clamp(25px,7.4vw,34px);color:var(--ink);line-height:1.45}
+  .lead{margin-top:14px;font-size:clamp(17px,4.6vw,21px);line-height:1.8;color:var(--ink)}
   .divider{display:flex;align-items:center;gap:10px;margin:26px auto;width:min(92%,420px);color:var(--line)}
   .divider::before,.divider::after{content:"";flex:1;height:1.5px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
   .divider span{font-size:18px}
@@ -194,21 +201,25 @@
 <main>
   <img class="ayah rv" src="ayah.webp" alt="بسم الله الرحمن الرحيم — ومن آياته أن خلق لكم من أنفسكم أزواجًا لتسكنوا إليها وجعل بينكم مودة ورحمة">
 
-  <p class="lead rv">آل النموس وآل الخضر يتشرفان بدعوتكم<br>لحضور زفاف نجليهما</p>
+  <div class="hosts rv">
+    <p class="clan">آل النموس وآل الخضر</p>
+    <p class="hosts-top">يتشرف</p>
+    <div class="fathers">
+      <div class="fa"><span class="ttl">السيد</span> <span class="fn">عاطف محمود النموس</span></div>
+      <div class="fa"><span class="ttl">والسيد</span> <span class="fn">محمد فؤاد خضر</span></div>
+    </div>
+    <p class="lead">بدعوتكم لحضور حفل زفاف نجليهما</p>
+  </div>
 
   <div class="divider rv"><span>❀</span></div>
 
   <div class="couple rv">
     <div class="person">
       <div class="name">مهند</div>
-      <div class="rel">نجل السيد</div>
-      <div class="father">عاطف محمود النموس</div>
     </div>
     <button id="heart" aria-label="بارك للعروسين">♥</button>
     <div class="person">
       <div class="name">دعاء</div>
-      <div class="rel">كريمة السيد</div>
-      <div class="father">محمد فؤاد خضر</div>
     </div>
   </div>
 
