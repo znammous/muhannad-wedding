@@ -7,7 +7,7 @@
   const NAMES = {m:'العريس', d:'العروس'};
 
   let ov, cv, ctx, dpr, W, H, scale, WW, WH, GY;
-  let mode = 'ai', human = 'm', turn = 'm', st = 'menu';
+  let mode = 'ai', human = 'm', turn = 'm', st = 'menu', surprise = null;
   let score = {m:0, d:0}, love = 0, wind = 0;
   let proj = null, aim = null, particles = [], floats = [], poses = {m:'idle', d:'idle'}, poseT = {m:0, d:0};
   let tWorld = 0, last = 0, raf = 0, turnTimer = 0, aiThrows = 0;
@@ -42,6 +42,13 @@
       background:#8c6aa8;color:#fff;box-shadow:0 8px 18px #8c6aa855}
     .g-card button.ghost{background:#fff;color:#8c6aa8;border:1.5px solid #dccbe7;box-shadow:none}
     .g-hidden{display:none!important}
+    .g-surprise{margin:4px 0 6px}
+    .g-sp1{font-family:"Reem Kufi",sans-serif;font-size:26px;color:#e06c9f;animation:gpop 1s ease-in-out infinite alternate}
+    @keyframes gpop{to{transform:scale(1.08)}}
+    .g-card .g-sp2{font-size:16px;color:#3b2c4a;margin:6px 0 10px}
+    .g-big{display:block;text-decoration:none;font-size:18px;font-weight:500;border-radius:999px;padding:14px;color:#fff;
+      background:linear-gradient(90deg,#8c6aa8,#e06c9f);box-shadow:0 10px 24px #8c6aa866;animation:gpop 1.2s ease-in-out infinite alternate}
+    #game.surprise .g-close,#game.surprise .g-remind,#game.surprise #g-back{display:none!important}
     .g-remind{background:#f8f3fa;border:1px solid #eadff1;border-radius:18px;padding:12px;margin:2px 0 6px}
     .g-rt{font-family:"Reem Kufi",sans-serif;color:#8c6aa8;font-size:18px;margin-bottom:6px}
     .g-ri{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
@@ -84,6 +91,11 @@
       <div class="g-panel g-hidden" id="g-win"><div class="g-card">
         <h3>اكتمل قلب الحب 💜</h3>
         <p id="g-wt"></p>
+        <div class="g-surprise g-hidden">
+          <div class="g-sp1">🎉 مفاجأة! 🎉</div>
+          <p class="g-sp2">أنت مدعوّ لحضور حفل زفاف العروسين 💜<br>افتح الدعوة لتعرف التفاصيل</p>
+          <a class="g-big" id="g-inv" href="./">افتح الدعوة 💌</a>
+        </div>
         <div class="g-remind">
           <div class="g-rt">لا تنسوا موعدنا 💜</div>
           <div class="g-ri"><span>📅 السبت 2026.11.28</span><span>🕐 الاستقبال 1:00</span><span>📍 الصالة الدمشقية</span></div>
@@ -242,6 +254,8 @@
     ov.querySelector('#g-wt').innerHTML = `${t}تبادلتم ${GOAL} رميات حب 🌹<br>العريس ${score.m} — العروس ${score.d}<br><b style="color:#8c6aa8">بارك الله لهما وبارك عليهما وجمع بينهما في خير</b>`;
     const days = Math.ceil((new Date(2026,10,28) - new Date()) / 864e5);
     ov.querySelector('#g-rd').textContent = days > 1 ? `باقٍ ${days} يومًا على الفرح` : days === 1 ? 'الفرح غدًا بإذن الله 🎉' : days === 0 ? 'الفرح اليوم! 🎊' : '';
+    if(surprise){ ov.querySelector('.g-surprise').classList.remove('g-hidden'); ov.querySelector('#g-inv').href = surprise.invite || './';
+      ov.querySelector('#g-win h3').textContent = 'أحسنت! اكتمل قلب الحب 💜'; ov.querySelector('#g-wt').innerHTML = `تبادلتم ${GOAL} رميات حب 🌹`; }
     setTimeout(()=>ov.querySelector('#g-win').classList.remove('g-hidden'), 1800);
   }
   function puff(x,y,n){ for(let i=0;i<n;i++) particles.push({x,y,vx:(Math.random()-.5)*160,vy:-Math.random()*160,t:0,life:.8,a:Math.random()*6,va:4,kind:'petal',c:['#f2b5c8','#e7a0bd','#d9c2e8'][i%3],s:4+Math.random()*4}); }
@@ -292,10 +306,10 @@
   }
   function pose(who){
     const p = poses[who], t = tWorld;
-    if(p==='throw') return {front:-1.9, back:1.9, jump:0};
+    if(p==='throw') return {front:-0.75, back:1.9, jump:0};
     if(p==='catch') return {front:-1.2, back:-1.95, jump:Math.abs(Math.sin(t*10))*10};
     if(p==='win') return {front:-1.3, back:-1.85, jump:Math.abs(Math.sin(t*6))*16};
-    if(st==='aim' && turn===who && aim) return {front:-2.6, back:1.7, jump:0};
+    if(st==='aim' && turn===who && aim) return {front:2.45, back:1.7, jump:0};
     return {front:1.15+Math.sin(t*2)*.05, back:1.95, jump:0};
   }
   function shadow(x){ ctx.fillStyle = '#8c6aa833'; ctx.beginPath(); ctx.ellipse(x, GY+2, 34, 7, 0, 0, 7); ctx.fill(); }
@@ -402,8 +416,9 @@
   }
 
   /* ---------- فتح وإغلاق ---------- */
-  function open(){
+  function open(opts){
     if(!ov) build();
+    surprise = opts && opts.surprise ? opts : null; ov.classList.toggle('surprise', !!surprise);
     resize(); ov.style.display = 'block'; requestAnimationFrame(()=>ov.classList.add('on'));
     ov.querySelector('#g-menu').classList.remove('g-hidden'); ov.querySelector('#g-win').classList.add('g-hidden');
     st = 'menu'; poses = {m:'idle', d:'idle'}; particles = []; proj = null; updHud(); updWind(); msg('');

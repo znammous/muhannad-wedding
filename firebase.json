@@ -10,6 +10,15 @@
     ],
     "headers": [
       {
+        "source": "/play",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
         "source": "/",
         "headers": [
           {
@@ -36,6 +45,7 @@
           }
         ]
       }
-    ]
+    ],
+    "cleanUrls": true
   }
 }
