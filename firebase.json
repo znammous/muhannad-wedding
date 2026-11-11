@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "site": "muhannad-wedding",
+    "public": ".",
+    "ignore": ["firebase.json", ".firebaserc", "**/.*", "**/node_modules/**"],
+    "headers": [
+      { "source": "**/*.@(webp|jpg)", "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }] }
+    ]
+  }
+}
