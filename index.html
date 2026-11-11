@@ -292,9 +292,9 @@ function drawHeart(s){ cx.beginPath(); cx.moveTo(0,s*.3); cx.bezierCurveTo(-s,-s
 })();
 function heartsAt(x,y){
   const n=5+(Math.random()*4|0);
-  for(let i=0;i<n;i++) hearts.push({x:x+(-14+Math.random()*28), y:y+(-6+Math.random()*12), vy:-(1.1+Math.random()*1.6),
-    s:16+Math.random()*16, t:-i*5, life:90+Math.random()*50, f:.05+Math.random()*.05, ph:Math.random()*6.28,
-    sway:.4+Math.random()*.8, o:.85+Math.random()*.15});
+  for(let i=0;i<n;i++) hearts.push({x:x+(-6+Math.random()*12), y:y+(-4+Math.random()*8), vy:-(.5+Math.random()*.9),
+    s:16+Math.random()*16, t:-i*5, life:70+Math.random()*40, f:.05+Math.random()*.05, ph:Math.random()*6.28,
+    sway:.2+Math.random()*.4, o:.85+Math.random()*.15});
 }
 addEventListener('pointerdown', e=>{ if(intro.classList.contains('gone')) heartsAt(e.clientX,e.clientY); }, {passive:true});
 
