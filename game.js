@@ -20,7 +20,7 @@
     #game{position:fixed;inset:0;z-index:50;background:#efe6f4;font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;
       color:#3b2c4a;touch-action:none;-webkit-user-select:none;user-select:none;opacity:0;transition:opacity .35s}
     #game.on{opacity:1}
-    #game canvas{position:absolute;top:0;left:0;width:100vw;height:100vh;height:100dvh;display:block}
+    #game > canvas{position:absolute;top:0;left:0;width:100vw;height:100vh;height:100dvh;display:block}
     .g-hud{position:absolute;top:calc(10px + env(safe-area-inset-top));left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none;padding:0 60px}
     .g-top{display:flex;align-items:center;gap:10px;width:min(100%,520px)}
     .g-sc{font-size:15px;font-weight:500;background:#ffffffd0;border-radius:999px;padding:4px 12px;white-space:nowrap;box-shadow:0 4px 12px #8c6aa822}
@@ -34,14 +34,23 @@
     .g-msg{font-size:15px;color:#5b4470;background:#ffffffb8;border-radius:999px;padding:3px 14px;min-height:26px}
     .g-close{position:absolute;top:calc(10px + env(safe-area-inset-top));left:12px;width:42px;height:42px;border-radius:50%;border:1px solid #dccbe7;
       background:#fff;color:#8c6aa8;font-size:18px;cursor:pointer;z-index:3}
-    .g-panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#efe6f4cc;backdrop-filter:blur(3px);z-index:2}
-    .g-card{background:#fff;border-radius:24px;padding:26px 22px;width:min(92vw,380px);text-align:center;box-shadow:0 20px 50px #5b3f7333}
+    .g-panel{position:absolute;inset:0;display:flex;overflow-y:auto;padding:12px;background:#efe6f4cc;backdrop-filter:blur(3px);z-index:2}
+    .g-card{margin:auto;background:#fff;border-radius:24px;padding:26px 22px;width:min(92vw,380px);text-align:center;box-shadow:0 20px 50px #5b3f7333}
     .g-card h3{font-family:"Reem Kufi",sans-serif;color:#8c6aa8;font-size:28px;margin-bottom:6px}
     .g-card p{font-size:15px;line-height:1.8;color:#6d5a80;margin-bottom:16px}
     .g-card button{display:block;width:100%;font:inherit;font-size:16px;border:0;border-radius:999px;padding:12px;margin-top:10px;cursor:pointer;
       background:#8c6aa8;color:#fff;box-shadow:0 8px 18px #8c6aa855}
     .g-card button.ghost{background:#fff;color:#8c6aa8;border:1.5px solid #dccbe7;box-shadow:none}
-    .g-hidden{display:none!important}`;
+    .g-hidden{display:none!important}
+    .g-card button[data-p]{display:flex;align-items:center;justify-content:center;gap:10px}
+    .g-av{width:40px;height:40px;border-radius:50%;background:#f3ecf7;flex:0 0 40px;margin:-6px 0;box-shadow:0 0 0 2px #ffffff88}
+    @media (max-height:520px){
+      .g-card{padding:14px 18px;width:min(92vw,440px)}
+      .g-card h3{font-size:22px;margin-bottom:2px}
+      .g-card p{font-size:13.5px;line-height:1.6;margin-bottom:6px}
+      .g-card button{padding:9px;margin-top:7px;font-size:15px}
+      .g-hud{gap:3px}.g-msg{font-size:13px}
+    }`;
     document.head.appendChild(css);
 
     ov = document.createElement('div'); ov.id = 'game';
@@ -59,9 +68,9 @@
       <button class="g-close" aria-label="إغلاق اللعبة">✕</button>
       <div class="g-panel" id="g-menu"><div class="g-card">
         <h3>رمية حب 💐</h3>
-        <p>تبادلوا الورد والحلوى بين العروسين!<br>اسحب إصبعك للخلف ثم أفلت للرمي، وانتبه للرياح.<br>كل رمية يلتقطها الطرف الآخر تملأ قلب الحب 💜</p>
-        <button data-p="m">العب كالعريس 🤵</button>
-        <button data-p="d">العب كالعروس 👰</button>
+        <p>تبادلوا الورد والحلوى بين العروسين!<br>اضغط مطوّلًا لتعبئة مؤشر القوة، ثم أفلت في اللحظة المناسبة، وانتبه للرياح.<br>كل رمية يلتقطها الطرف الآخر تملأ قلب الحب 💜</p>
+        <button data-p="m"><canvas class="g-av" data-w="m"></canvas>العب كالعريس</button>
+        <button data-p="d"><canvas class="g-av" data-w="d"></canvas>العب كالعروس</button>
         <button class="ghost" data-p="2">لاعبان على نفس الجهاز</button>
       </div></div>
       <div class="g-panel g-hidden" id="g-win"><div class="g-card">
@@ -77,6 +86,7 @@
     ov.querySelector('#g-back').onclick = close;
     ov.querySelector('#g-again').onclick = () => { ov.querySelector('#g-win').classList.add('g-hidden'); ov.querySelector('#g-menu').classList.remove('g-hidden'); st='menu'; };
     ov.querySelectorAll('#g-menu button').forEach(b => b.onclick = () => start(b.dataset.p));
+    ov.querySelectorAll('.g-av').forEach(avatar);
     cv.addEventListener('pointerdown', down); addEventListener('pointermove', move); addEventListener('pointerup', up); addEventListener('pointercancel', up);
     addEventListener('resize', resize);
   }
@@ -120,7 +130,7 @@
     if(!first) turn = turn==='m' ? 'd' : 'm';
     wind = Math.round((Math.random()*2-1)*10)/10; updWind();
     proj = null; aim = null;
-    if(isHuman(turn)){ st='aim'; msg(`دورك يا ${NAMES[turn]}! اسحب للخلف ثم أفلت 🌹`); }
+    if(isHuman(turn)){ st='aim'; msg(`دورك يا ${NAMES[turn]}! اضغط مطوّلًا ثم أفلت 🌹`); }
     else { st='ai'; msg(`${NAMES[turn]} تستعد للرمي...`.replace('مهند تستعد','مهند يستعد')); turnTimer = 1.1; }
   }
   function msg(t){ ov.querySelector('#g-msg').textContent = t; }
@@ -149,7 +159,7 @@
   }
   function aiThrow(){
     const who = turn, tgt = who==='m'?'d':'m', h = hand(who), tx = X(tgt);
-    const ang = (48 + Math.random()*14) * Math.PI/180; let lo = 200, hi = VMAX, v = 700;
+    const ang = ANGLE; let lo = 200, hi = VMAX, v = 700;
     for(let i=0;i<22;i++){ v = (lo+hi)/2; const land = simulate(h.x,h.y, dir(who)*v*Math.cos(ang), -v*Math.sin(ang), tx);
       const over = dir(who) > 0 ? land > tx : land < tx; if(over) hi = v; else lo = v; }
     const skill = Math.min(.85, .3 + aiThrows*.08);                // يتحسن مع الوقت
@@ -159,22 +169,17 @@
   }
 
   /* ---------- التحكم باللمس ---------- */
-  function toWorld(e){ return {x:e.clientX/scale, y:e.clientY/scale}; }
-  function down(e){ if(st!=='aim') return; const p = toWorld(e); aim = {sx:p.x, sy:p.y, x:p.x, y:p.y, id:e.pointerId}; try{cv.setPointerCapture(e.pointerId);}catch(_){} }
-  function move(e){ if(!aim || e.pointerId!==aim.id) return; const p = toWorld(e); aim.x = p.x; aim.y = p.y; }
-  function aimVel(){
-    let dx = aim.sx - aim.x, dy = aim.sy - aim.y; const len = Math.hypot(dx,dy);
-    if(len < 8) return null;
-    const pw = Math.min(len/170, 1) * VMAX;
-    let a = Math.atan2(-dy, dx*dir(turn));                     // زاوية باتجاه الخصم
-    a = Math.max(.12, Math.min(1.45, a));
-    return {vx: dir(turn)*pw*Math.cos(a), vy: -pw*Math.sin(a), pw: pw/VMAX};
-  }
-  function up(e){ if(!aim || e.pointerId!==aim.id) return; const v = aimVel(); aim = null; if(v && v.pw > .12) throwIt(turn, v.vx, v.vy); }
+  const ANGLE = 52 * Math.PI/180;                              // زاوية رمي ثابتة
+  const CHARGE = .85;                                          // ثوانٍ لامتلاء المؤشر
+  function aimPower(){ const ph = (aim.t / CHARGE) % 2; return .18 + .82 * (ph < 1 ? ph : 2 - ph); }
+  function down(e){ if(st!=='aim' || aim) return; aim = {t:0, id:e.pointerId}; try{cv.setPointerCapture(e.pointerId);}catch(_){} }
+  function move(){}
+  function up(e){ if(!aim || e.pointerId!==aim.id) return; const v = aimPower()*VMAX; aim = null;
+    throwIt(turn, dir(turn)*v*Math.cos(ANGLE), -v*Math.sin(ANGLE)); }
 
   /* ---------- التحديث ---------- */
   function step(dt){
-    tWorld += dt;
+    tWorld += dt; if(aim) aim.t += dt;
     for(const k of ['m','d']) if(poseT[k] > 0){ poseT[k] -= dt; if(poseT[k] <= 0 && st!=='win') poses[k] = 'idle'; }
     if(st==='ai'){ turnTimer -= dt; if(turnTimer <= 0) aiThrow(); }
     if(st==='fly' && proj){
@@ -334,15 +339,23 @@
     ctx.restore();
   }
   function drawAim(){
-    if(st!=='aim' || !aim) return; const v = aimVel(); if(!v) return;
-    const h = hand(turn); let x=h.x, y=h.y, vx=v.vx, vy=v.vy;
-    ctx.fillStyle = '#8c6aa8';
-    for(let i=0;i<26;i++){ for(let k=0;k<2;k++){ const dt=1/60; vx+=wind*150*dt; vy+=G*dt; x+=vx*dt; y+=vy*dt; }
-      ctx.globalAlpha = (1-i/26)*.8; ctx.beginPath(); ctx.arc(x,y,3.2,0,7); ctx.fill(); }
-    ctx.globalAlpha = 1;
-    // مؤشر القوة
-    ctx.strokeStyle = '#eadff1'; ctx.lineWidth = 8; ctx.lineCap='round'; ctx.beginPath(); ctx.arc(h.x, h.y, 46, Math.PI*1.1, Math.PI*1.9); ctx.stroke();
-    ctx.strokeStyle = v.pw > .85 ? '#e889b0' : '#8c6aa8'; ctx.beginPath(); ctx.arc(h.x, h.y, 46, Math.PI*1.1, Math.PI*(1.1+.8*v.pw)); ctx.stroke();
+    if(st!=='aim') return;
+    const h = hand(turn), d = dir(turn), cx0 = X(turn) - d*62, top = GY - 170, hgt = 120;
+    const p = aim ? aimPower() : 0;
+    // سهم الاتجاه الثابت
+    ctx.save(); ctx.translate(h.x, h.y); ctx.rotate(d > 0 ? -ANGLE : Math.PI + ANGLE);
+    ctx.globalAlpha = .55 + .25*Math.sin(tWorld*5); ctx.strokeStyle = '#8c6aa8'; ctx.lineWidth = 3; ctx.setLineDash([6,7]);
+    ctx.beginPath(); ctx.moveTo(20,0); ctx.lineTo(70,0); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = '#8c6aa8'; ctx.beginPath(); ctx.moveTo(80,0); ctx.lineTo(68,-7); ctx.lineTo(68,7); ctx.fill(); ctx.restore(); ctx.globalAlpha = 1;
+    // عمود القوة
+    ctx.fillStyle = '#ffffffd9'; ctx.strokeStyle = '#dccbe7'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.roundRect ? ctx.roundRect(cx0-11, top, 22, hgt, 11) : ctx.rect(cx0-11, top, 22, hgt); ctx.fill(); ctx.stroke();
+    const fh = (hgt-6) * p, g = ctx.createLinearGradient(0, top+hgt, 0, top);
+    g.addColorStop(0,'#c3aad6'); g.addColorStop(.6,'#8c6aa8'); g.addColorStop(1,'#e889b0');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(cx0-8, top+hgt-3-fh, 16, fh, 8) : ctx.rect(cx0-8, top+hgt-3-fh, 16, fh); ctx.fill();
+    ctx.fillStyle = '#8c6aa8'; ctx.textAlign = 'center'; ctx.font = '500 13px "IBM Plex Sans Arabic", sans-serif';
+    ctx.fillText('القوة', cx0, top - 8);
+    if(!aim){ ctx.globalAlpha = .6 + .4*Math.sin(tWorld*4); ctx.font = '22px sans-serif'; ctx.fillText('👆', cx0, top + hgt + 30); ctx.globalAlpha = 1; }
   }
   function drawFx(){
     for(const p of particles){ const k = 1 - p.t/p.life; ctx.save(); ctx.globalAlpha = Math.max(0,k); ctx.translate(p.x,p.y); ctx.rotate(p.a); ctx.fillStyle = p.c;
@@ -359,6 +372,16 @@
   function loop(ts){
     const dt = Math.min(.033, (ts - last)/1000 || 0); last = ts;
     step(dt); draw(); raf = requestAnimationFrame(loop);
+  }
+
+  /* صورة مصغّرة للشخصية (الرأس والكتفان) */
+  function avatar(c){
+    const who = c.dataset.w, r = devicePixelRatio || 1, S = 40;
+    c.width = S*r; c.height = S*r;
+    const keep = {ctx, GY, WW}; ctx = c.getContext('2d'); WW = 190; GY = 200;
+    const k = S/92; ctx.setTransform(r*k,0,0,r*k,0,0); ctx.translate(-(95-46), -(GY-178));
+    who === 'm' ? groom() : bride();
+    ({ctx, GY, WW} = keep);
   }
 
   /* ---------- فتح وإغلاق ---------- */

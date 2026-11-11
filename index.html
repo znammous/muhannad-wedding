@@ -160,7 +160,9 @@
   .rules li b{display:block;font-weight:500;color:var(--accent);font-size:clamp(15px,4.1vw,17px)}
   .rules-end{margin-top:16px;font-size:clamp(15px,4.2vw,17px);color:var(--accent)}
   .orn-s{color:var(--accent2);font-size:.9em;margin:0 4px}
-  .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:28px 0 6px}
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:420px;margin:28px auto 6px}
+  .actions .btn{white-space:nowrap;text-align:center;padding:12px 8px;font-size:clamp(13.5px,3.9vw,15px);overflow:hidden;text-overflow:ellipsis}
+  .actions #celebrate{grid-column:1/-1}
   .btn{
     font:inherit;font-size:15px;border:0;cursor:pointer;border-radius:999px;padding:12px 20px;
     background:var(--accent);color:#fff;box-shadow:0 8px 20px #8c6aa855;text-decoration:none;
@@ -312,7 +314,7 @@
     <p class="rules-end"><span class="orn-s">❀</span> ولا تنسوا العروسين من صالح دعائكم <span class="orn-s">❀</span></p>
   </section>
 
-
+  <div class="actions rv">
     <button class="btn" id="celebrate">🎉 مبروك للعروسين</button>
     <button class="btn ghost" id="cal">📅 أضف للتقويم</button>
     <a class="btn ghost" id="map" target="_blank" rel="noopener"
@@ -494,7 +496,7 @@ document.getElementById('cal').onclick=()=>{
 };
 document.getElementById('play').onclick=()=>{
   if(window.WeddingGame) return WeddingGame.open();
-  const sc=document.createElement('script'); sc.src='game.js?v=2'; sc.onload=()=>WeddingGame.open(); document.head.appendChild(sc);
+  const sc=document.createElement('script'); sc.src='game.js?v=5'; sc.onload=()=>WeddingGame.open(); document.head.appendChild(sc);
 };
 document.getElementById('share').onclick=async()=>{
   const data={title:'دعوة زفاف مهند ودعاء',text:'يسعدنا حضوركم زفاف مهند ودعاء يوم السبت 2026.11.28 💜',url:SHARE_URL};
