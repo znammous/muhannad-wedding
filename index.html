@@ -134,6 +134,28 @@
     border:1px solid #dccbe7;background:#ffffffcc;color:var(--accent);font-size:18px;cursor:pointer;
     display:none;place-items:center;backdrop-filter:blur(4px)
   }
+  #scrollHint{
+    position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:8;
+    display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--accent);
+    opacity:0;transition:opacity .8s ease;pointer-events:none;font-size:13px;letter-spacing:.4px
+  }
+  #scrollHint.show{opacity:1}
+  #scrollHint::before{content:"";position:absolute;z-index:-1;left:50%;bottom:-30px;width:100vw;height:150px;transform:translateX(-50%);
+    background:linear-gradient(to top,var(--bg2) 15%,#ece3efcc 45%,transparent);pointer-events:none}
+  #scrollHint .pill{
+    width:26px;height:42px;border:1.5px solid var(--accent2);border-radius:14px;position:relative;
+    background:#ffffff8c;backdrop-filter:blur(4px);box-shadow:0 6px 16px #8c6aa826
+  }
+  #scrollHint .pill::after{
+    content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;
+    background:var(--accent);animation:wheel 1.8s ease-in-out infinite
+  }
+  #scrollHint .chev{width:14px;height:14px;border-right:1.5px solid var(--accent2);border-bottom:1.5px solid var(--accent2);
+    transform:rotate(45deg);margin-top:-6px;animation:chev 1.8s ease-in-out infinite}
+  #scrollHint .chev:nth-child(3){animation-delay:.2s;margin-top:-10px}
+  #scrollHint span{font-weight:500}
+  @keyframes wheel{0%{opacity:0;transform:translateY(0)}30%{opacity:1}80%{opacity:0;transform:translateY(14px)}100%{opacity:0}}
+  @keyframes chev{0%,100%{opacity:.15;transform:rotate(45deg) translate(-3px,-3px)}50%{opacity:1;transform:rotate(45deg) translate(2px,2px)}}
   @media (prefers-reduced-motion: reduce){ *{animation:none!important;transition:none!important} }
 </style>
 </head>
@@ -214,6 +236,13 @@
   </div>
 </main>
 
+<div id="scrollHint" aria-hidden="true">
+  <span>اسحب للأسفل</span>
+  <div class="pill"></div>
+  <div class="chev"></div>
+  <div class="chev"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -222,7 +251,7 @@ const EVENT_DATE = new Date(2026, 10, 28, 0, 0, 0); // 28 نوفمبر 2026
 
 /* ===== بتلات متساقطة + قصاصات احتفال ===== */
 const cv = document.getElementById('petals'), cx = cv.getContext('2d');
-let W, H, petals = [], confetti = [];
+let W, H, petals = [], confetti = [], hearts = [];
 const COLORS = ['#d9c2e8','#c7a7dc','#efd3e0','#e7c6d4','#b99ad0','#f3e3ee'];
 function resize(){ const r = devicePixelRatio||1; W=innerWidth; H=innerHeight; cv.width=W*r; cv.height=H*r; cx.setTransform(r,0,0,r,0,0); }
 addEventListener('resize', resize); resize();
@@ -253,8 +282,21 @@ function drawHeart(s){ cx.beginPath(); cx.moveTo(0,s*.3); cx.bezierCurveTo(-s,-s
     cx.save(); cx.translate(c.x,c.y); cx.rotate(c.a); cx.globalAlpha=Math.min(1,c.life/40); cx.fillStyle=c.c;
     c.heart ? drawHeart(c.w*1.2) : cx.fillRect(-c.w/2,-c.h/2,c.w,c.h); cx.restore();
     if(c.life<=0||c.y>H+40) confetti.splice(i,1); }
+  for(let i=hearts.length-1;i>=0;i--){ const h=hearts[i]; h.t++; if(h.t<=0) continue; h.y+=h.vy; h.vy*=.992; h.x+=Math.sin(h.t*h.f+h.ph)*h.sway;
+    if(h.t<0){ continue; } const k=h.t/h.life, sc=k<.15?k/.15:1;
+    cx.save(); cx.translate(h.x,h.y); cx.rotate(Math.sin(h.t*.05+h.ph)*.25); cx.scale(sc,sc);
+    cx.globalAlpha=Math.max(0,1-k)*h.o; cx.shadowColor='rgba(140,106,168,.7)'; cx.shadowBlur=14; cx.fillStyle='#fff';
+    drawHeart(h.s); cx.restore();
+    if(h.t>=h.life) hearts.splice(i,1); }
   requestAnimationFrame(loop);
 })();
+function heartsAt(x,y){
+  const n=5+(Math.random()*4|0);
+  for(let i=0;i<n;i++) hearts.push({x:x+(-14+Math.random()*28), y:y+(-6+Math.random()*12), vy:-(1.1+Math.random()*1.6),
+    s:16+Math.random()*16, t:-i*5, life:90+Math.random()*50, f:.05+Math.random()*.05, ph:Math.random()*6.28,
+    sway:.4+Math.random()*.8, o:.85+Math.random()*.15});
+}
+addEventListener('pointerdown', e=>{ if(intro.classList.contains('gone')) heartsAt(e.clientX,e.clientY); }, {passive:true});
 
 /* ===== زقزقة عصافير مولّدة (بدون ملفات) ===== */
 let actx, musicOn=false, musicTimer, master;
@@ -312,9 +354,13 @@ function openInvite(){
   if(env.classList.contains('open')) return;
   env.classList.add('open');
   try{ startMusic(); }catch(e){}
-  setTimeout(()=>{ intro.classList.add('gone'); burst(W/2,H*.35,120); reveal(); document.getElementById('music').style.display='grid'; },1500);
+  setTimeout(()=>{ intro.classList.add('gone'); burst(W/2,H*.35,120); reveal(); document.getElementById('music').style.display='grid';
+    setTimeout(()=>{ if(scrollY<40) hint.classList.add('show'); },2200); },1500);
 }
 env.addEventListener('click', openInvite);
+const hint=document.getElementById('scrollHint');
+addEventListener('scroll',()=>{ if(scrollY>60) hint.classList.remove('show');
+  if(innerHeight+scrollY>=document.body.scrollHeight-10) hint.classList.remove('show'); },{passive:true});
 
 /* ===== ظهور العناصر تدريجيًا ===== */
 function reveal(){
