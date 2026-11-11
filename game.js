@@ -42,6 +42,14 @@
       background:#8c6aa8;color:#fff;box-shadow:0 8px 18px #8c6aa855}
     .g-card button.ghost{background:#fff;color:#8c6aa8;border:1.5px solid #dccbe7;box-shadow:none}
     .g-hidden{display:none!important}
+    .g-remind{background:#f8f3fa;border:1px solid #eadff1;border-radius:18px;padding:12px;margin:2px 0 6px}
+    .g-rt{font-family:"Reem Kufi",sans-serif;color:#8c6aa8;font-size:18px;margin-bottom:6px}
+    .g-ri{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+    .g-ri span{background:#fff;border-radius:999px;padding:4px 10px;font-size:13.5px;color:#3b2c4a;white-space:nowrap}
+    .g-rd{font-size:13.5px;color:#6d5a80;margin-top:8px}
+    .g-rb{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+    .g-card .g-rb button,.g-rb a{margin-top:6px;padding:9px 6px;font-size:14px;white-space:nowrap}
+    .g-rb a{display:block;font:inherit;font-size:14px;border-radius:999px;text-decoration:none;background:#fff;color:#8c6aa8;border:1.5px solid #dccbe7;padding:9px 6px;margin-top:6px}
     .g-card button[data-p]{display:flex;align-items:center;justify-content:center;gap:10px}
     .g-av{width:40px;height:40px;border-radius:50%;background:#f3ecf7;flex:0 0 40px;margin:-6px 0;box-shadow:0 0 0 2px #ffffff88}
     @media (max-height:520px){
@@ -76,6 +84,12 @@
       <div class="g-panel g-hidden" id="g-win"><div class="g-card">
         <h3>اكتمل قلب الحب 💜</h3>
         <p id="g-wt"></p>
+        <div class="g-remind">
+          <div class="g-rt">لا تنسوا موعدنا 💜</div>
+          <div class="g-ri"><span>📅 السبت 2026.11.28</span><span>🕐 الاستقبال 1:00</span><span>📍 الصالة الدمشقية</span></div>
+          <div class="g-rd" id="g-rd"></div>
+          <div class="g-rb"><button class="ghost" id="g-cal">أضف للتقويم</button><a class="ghost" id="g-map" href="https://maps.app.goo.gl/CLwcyqBLpvZDxUjZ7" target="_blank" rel="noopener">الاتجاهات للصالة</a></div>
+        </div>
         <button id="g-again">العب مرة أخرى</button>
         <button class="ghost" id="g-back">رجوع للدعوة</button>
       </div></div>`;
@@ -84,6 +98,7 @@
 
     ov.querySelector('.g-close').onclick = close;
     ov.querySelector('#g-back').onclick = close;
+    ov.querySelector('#g-cal').onclick = () => { const c = document.getElementById('cal'); if(c) c.click(); };
     ov.querySelector('#g-again').onclick = () => { ov.querySelector('#g-win').classList.add('g-hidden'); ov.querySelector('#g-menu').classList.remove('g-hidden'); st='menu'; };
     ov.querySelectorAll('#g-menu button').forEach(b => b.onclick = () => start(b.dataset.p));
     ov.querySelectorAll('.g-av').forEach(avatar);
@@ -225,6 +240,8 @@
     msg('مبروك لمهند ودعاء 💜');
     const t = mode==='ai' ? (score[human] >= score[human==='m'?'d':'m'] ? 'أحسنت! ' : 'رمية رائعة! ') : '';
     ov.querySelector('#g-wt').innerHTML = `${t}تبادلتم ${GOAL} رميات حب 🌹<br>مهند ${score.m} — دعاء ${score.d}<br><b style="color:#8c6aa8">بارك الله لهما وبارك عليهما وجمع بينهما في خير</b>`;
+    const days = Math.ceil((new Date(2026,10,28) - new Date()) / 864e5);
+    ov.querySelector('#g-rd').textContent = days > 1 ? `باقٍ ${days} يومًا على الفرح` : days === 1 ? 'الفرح غدًا بإذن الله 🎉' : days === 0 ? 'الفرح اليوم! 🎊' : '';
     setTimeout(()=>ov.querySelector('#g-win').classList.remove('g-hidden'), 1800);
   }
   function puff(x,y,n){ for(let i=0;i<n;i++) particles.push({x,y,vx:(Math.random()-.5)*160,vy:-Math.random()*160,t:0,life:.8,a:Math.random()*6,va:4,kind:'petal',c:['#f2b5c8','#e7a0bd','#d9c2e8'][i%3],s:4+Math.random()*4}); }
