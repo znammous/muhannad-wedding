@@ -104,6 +104,7 @@
   .divider::before,.divider::after{content:"";flex:1;height:1.5px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
   .divider span{font-size:18px}
   .couple{display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:6px}
+  .person .kin{font-size:clamp(15px,4.2vw,18px);color:var(--soft);margin-bottom:-4px}
   .person .name{
     font-family:"Reem Kufi";font-weight:600;font-size:clamp(40px,12vw,58px);color:var(--accent);
     text-shadow:0 6px 14px #8c6aa833; line-height:1.3;
@@ -208,17 +209,19 @@
       <div class="fa"><span class="ttl">السيد</span> <span class="fn">عاطف محمود النموس</span></div>
       <div class="fa"><span class="ttl">والسيد</span> <span class="fn">محمد فؤاد خضر</span></div>
     </div>
-    <p class="lead">بدعوتكم لحضور حفل زفاف نجليهما</p>
+    <p class="lead">بدعوتكم لحضور حفل زفاف</p>
   </div>
 
   <div class="divider rv"><span>❀</span></div>
 
   <div class="couple rv">
     <div class="person">
+      <div class="kin">ابنه</div>
       <div class="name">مهند</div>
     </div>
     <button id="heart" aria-label="بارك للعروسين">♥</button>
     <div class="person">
+      <div class="kin">كريمته</div>
       <div class="name">دعاء</div>
     </div>
   </div>
