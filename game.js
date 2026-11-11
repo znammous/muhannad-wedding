@@ -1,10 +1,10 @@
-/* لعبة «رمية حب» — مهند ودعاء يتبادلان الورد والحلوى لملء قلب الحب */
+/* لعبة «رمية حب» — العريس والعروس يتبادلان الورد والحلوى لملء قلب الحب */
 (function(){
   'use strict';
   const GOAL = 6;                 // عدد الرميات الناجحة لملء القلب
   const G = 900;                  // الجاذبية (وحدة عالم/ث²)
   const VMAX = 1150;              // أقصى سرعة رمي
-  const NAMES = {m:'مهند', d:'دعاء'};
+  const NAMES = {m:'العريس', d:'العروس'};
 
   let ov, cv, ctx, dpr, W, H, scale, WW, WH, GY;
   let mode = 'ai', human = 'm', turn = 'm', st = 'menu';
@@ -66,9 +66,9 @@
       <canvas></canvas>
       <div class="g-hud">
         <div class="g-top">
-          <div class="g-sc">مهند <b id="g-sm">0</b></div>
+          <div class="g-sc">العريس <b id="g-sm">0</b></div>
           <div class="g-love"><i id="g-love"></i><span>💜</span></div>
-          <div class="g-sc"><b id="g-sd">0</b> دعاء</div>
+          <div class="g-sc"><b id="g-sd">0</b> العروس</div>
         </div>
         <div class="g-wind"><span id="g-wa">←</span> الرياح <span class="bar"><em id="g-wb"></em></span></div>
         <div class="g-msg" id="g-msg"></div>
@@ -114,7 +114,7 @@
   }
 
   /* ---------- مواقع ---------- */
-  const X = who => who === 'm' ? WW - 95 : 95;          // مهند يمينًا ودعاء يسارًا كما في الكرت
+  const X = who => who === 'm' ? WW - 95 : 95;          // العريس يمينًا والعروس يسارًا كما في الكرت
   const dir = who => who === 'm' ? -1 : 1;
   const hand = who => ({x: X(who) + dir(who)*24, y: GY - 118});
   const box = who => ({x: X(who) - 34, y: GY - 162, w: 68, h: 162});
@@ -145,8 +145,8 @@
     if(!first) turn = turn==='m' ? 'd' : 'm';
     wind = Math.round((Math.random()*2-1)*10)/10; updWind();
     proj = null; aim = null;
-    if(isHuman(turn)){ st='aim'; msg(`دورك يا ${NAMES[turn]}! اضغط مطوّلًا ثم أفلت 🌹`); }
-    else { st='ai'; msg(`${NAMES[turn]} تستعد للرمي...`.replace('مهند تستعد','مهند يستعد')); turnTimer = 1.1; }
+    if(isHuman(turn)){ st='aim'; msg(`${turn==='m'?'دورك أيها العريس':'دورك أيتها العروس'}! اضغط مطوّلًا ثم أفلت 🌹`); }
+    else { st='ai'; msg(turn==='m' ? 'العريس يستعد للرمي...' : 'العروس تستعد للرمي...'); turnTimer = 1.1; }
   }
   function msg(t){ ov.querySelector('#g-msg').textContent = t; }
   function updHud(){
@@ -225,7 +225,7 @@
     floats.push({x:X(tgt), y:GY-190, t:0, txt:'+💜'});
     hearts(X(tgt), GY-140, 14);
     updHud(); proj = null;
-    msg(from==='m' ? 'دعاء التقطتها! 💐' : 'مهند التقطها! 💐');
+    msg(from==='m' ? 'العروس التقطتها! 💐' : 'العريس التقطها! 💐');
     if(love >= GOAL) return setTimeout(win, 700);
     st = 'wait'; setTimeout(()=>newTurn(false), 1100);
   }
@@ -237,9 +237,9 @@
   }
   function win(){
     st = 'win'; poses.m = poses.d = 'win'; hearts(WW/2, GY-200, 40); confetti(WW/2, GY-260, 120); snd('catch');
-    msg('مبروك لمهند ودعاء 💜');
+    msg('مبروك للعروسين 💜');
     const t = mode==='ai' ? (score[human] >= score[human==='m'?'d':'m'] ? 'أحسنت! ' : 'رمية رائعة! ') : '';
-    ov.querySelector('#g-wt').innerHTML = `${t}تبادلتم ${GOAL} رميات حب 🌹<br>مهند ${score.m} — دعاء ${score.d}<br><b style="color:#8c6aa8">بارك الله لهما وبارك عليهما وجمع بينهما في خير</b>`;
+    ov.querySelector('#g-wt').innerHTML = `${t}تبادلتم ${GOAL} رميات حب 🌹<br>العريس ${score.m} — العروس ${score.d}<br><b style="color:#8c6aa8">بارك الله لهما وبارك عليهما وجمع بينهما في خير</b>`;
     const days = Math.ceil((new Date(2026,10,28) - new Date()) / 864e5);
     ov.querySelector('#g-rd').textContent = days > 1 ? `باقٍ ${days} يومًا على الفرح` : days === 1 ? 'الفرح غدًا بإذن الله 🎉' : days === 0 ? 'الفرح اليوم! 🎊' : '';
     setTimeout(()=>ov.querySelector('#g-win').classList.remove('g-hidden'), 1800);
