@@ -9,7 +9,7 @@
 <meta property="og:description" content="يسعدنا حضوركم يوم السبت 2026.11.28 — الصالة الدمشقية">
 <meta name="theme-color" content="#f3edf5">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://muhannad-wedding.web.app/">
+<meta property="og:url" content="https://muhannad-wedding.web.app/?v=4">
 <meta property="og:site_name" content="زفاف مهند ودعاء">
 <meta property="og:locale" content="ar_AR">
 <meta property="og:image" content="https://muhannad-wedding.web.app/og.jpg?v=4">
@@ -333,6 +333,8 @@
 <script>
 /* ===== الإعدادات ===== */
 const EVENT_DATE = new Date(2026, 10, 28, 0, 0, 0); // 28 نوفمبر 2026
+// عند تغيير صورة المعاينة: ارفع الرقم هنا وفي og:url و og.jpg?v= ليقرأ واتساب المعاينة الجديدة
+const SHARE_URL = 'https://muhannad-wedding.web.app/?v=4';
 
 /* ===== بتلات متساقطة + قصاصات احتفال ===== */
 const cv = document.getElementById('petals'), cx = cv.getContext('2d');
@@ -485,8 +487,8 @@ document.getElementById('cal').onclick=()=>{
   toast('تمت إضافة الموعد 📅');
 };
 document.getElementById('share').onclick=async()=>{
-  const data={title:'دعوة زفاف مهند ودعاء',text:'يسعدنا حضوركم زفاف مهند ودعاء يوم السبت 2026.11.28 💜',url:location.href};
-  try{ if(navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(location.href); toast('تم نسخ رابط الدعوة'); } }catch(e){}
+  const data={title:'دعوة زفاف مهند ودعاء',text:'يسعدنا حضوركم زفاف مهند ودعاء يوم السبت 2026.11.28 💜',url:SHARE_URL};
+  try{ if(navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(SHARE_URL); toast('تم نسخ رابط الدعوة'); } }catch(e){}
 };
 </script>
 </body>
