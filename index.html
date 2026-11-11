@@ -318,6 +318,7 @@
     <a class="btn ghost" id="map" target="_blank" rel="noopener"
        href="https://maps.app.goo.gl/CLwcyqBLpvZDxUjZ7">📍 الاتجاهات للصالة</a>
     <button class="btn ghost" id="share">💌 شارك الدعوة</button>
+    <button class="btn" id="play">🎮 العب مع العروسين</button>
   </div>
 
   <div class="footer">
@@ -390,7 +391,7 @@ function heartsAt(x,y){
 }
 addEventListener('pointerdown', e=>{
   if(!intro.classList.contains('gone')) return;
-  if(e.target.closest('button,a,.btn')) return;            // الأزرار والروابط لها وظائفها
+  if(e.target.closest('button,a,.btn,#game')) return;            // الأزرار والروابط لها وظائفها
   heartsAt(e.clientX,e.clientY);
   if(navigator.vibrate) try{ navigator.vibrate(8); }catch(_){}
 }, {passive:true});
@@ -490,6 +491,10 @@ document.getElementById('cal').onclick=()=>{
     'SUMMARY:زفاف مهند ودعاء','LOCATION:الصالة الدمشقية — https://maps.app.goo.gl/CLwcyqBLpvZDxUjZ7','DESCRIPTION:الاستقبال الساعة 1:00','END:VEVENT','END:VCALENDAR'].join('\r\n');
   const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'})); a.download='زفاف-مهند-ودعاء.ics'; a.click();
   toast('تمت إضافة الموعد 📅');
+};
+document.getElementById('play').onclick=()=>{
+  if(window.WeddingGame) return WeddingGame.open();
+  const sc=document.createElement('script'); sc.src='game.js?v=1'; sc.onload=()=>WeddingGame.open(); document.head.appendChild(sc);
 };
 document.getElementById('share').onclick=async()=>{
   const data={title:'دعوة زفاف مهند ودعاء',text:'يسعدنا حضوركم زفاف مهند ودعاء يوم السبت 2026.11.28 💜',url:SHARE_URL};
