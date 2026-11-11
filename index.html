@@ -54,10 +54,11 @@
   .env-back{position:absolute;inset:0;background:#cdb7dc;border-radius:10px;box-shadow:0 20px 50px #5b3f7340}
   .env-letter{
     position:absolute;left:7%;right:7%;top:8%;bottom:6%;background:var(--card);border-radius:6px;
-    display:flex;align-items:center;justify-content:center;
-    font-family:"Reem Kufi";color:var(--accent);font-size:clamp(20px,6vw,28px);
+    display:flex;align-items:flex-start;justify-content:center;gap:4%;padding:9% 6% 0;
     transition:transform 1s cubic-bezier(.2,.8,.2,1) .5s; z-index:1;
   }
+  .env-letter img{width:34%;height:auto;filter:drop-shadow(0 4px 6px #8c6aa830)}
+  .env-letter .lh{width:18%;height:auto;margin-top:8%;overflow:visible;filter:drop-shadow(0 3px 6px #8c6aa840)}
   .env-front{
     position:absolute;inset:0;border-radius:10px;z-index:2;
     clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%);
@@ -214,7 +215,11 @@
 <section id="intro">
   <div class="env" id="env" role="button" aria-label="افتح الدعوة">
     <div class="env-back"></div>
-    <div class="env-letter">مهند ♡ دعاء</div>
+    <div class="env-letter">
+      <img src="name-muhannad.webp" alt="مهند">
+      <svg class="lh" viewBox="0 0 200 192" aria-hidden="true"><g fill="#c3aad6"><use href="#dal"/></g><g fill="#8c6aa8"><use href="#dal" transform="translate(200 0) scale(-1 1)"/></g></svg>
+      <img src="name-duaa.webp" alt="دعاء">
+    </div>
     <div class="env-front"></div>
     <div class="env-flap"></div>
     <div class="seal"><svg viewBox="0 0 200 192" aria-hidden="true"><g fill="#f3e8f8"><use href="#dal"/></g><g fill="#ffffff"><use href="#dal" transform="translate(200 0) scale(-1 1)"/></g></svg></div>
