@@ -98,7 +98,7 @@
         </div>
         <div class="g-remind">
           <div class="g-rt">لا تنسوا موعدنا 💜</div>
-          <div class="g-ri"><span>📅 السبت 2026.11.28</span><span>🕐 الاستقبال 1:00</span><span>📍 الصالة الدمشقية</span></div>
+          <div class="g-ri"><span>📅 الاثنين 2026.11.23</span><span>🕐 الحفل من 1:00 إلى 3:30</span><span>📍 الصالة الدمشقية</span></div>
           <div class="g-rd" id="g-rd"></div>
           <div class="g-rb"><button class="ghost" id="g-cal">أضف للتقويم</button><a class="ghost" id="g-map" href="https://maps.app.goo.gl/CLwcyqBLpvZDxUjZ7" target="_blank" rel="noopener">الاتجاهات للصالة</a></div>
         </div>
@@ -252,7 +252,7 @@
     msg('مبروك للعروسين 💜');
     const t = mode==='ai' ? (score[human] >= score[human==='m'?'d':'m'] ? 'أحسنت! ' : 'رمية رائعة! ') : '';
     ov.querySelector('#g-wt').innerHTML = `${t}تبادلتم ${GOAL} رميات حب 🌹<br>العريس ${score.m} — العروس ${score.d}<br><b style="color:#8c6aa8">بارك الله لهما وبارك عليهما وجمع بينهما في خير</b>`;
-    const days = Math.ceil((new Date(2026,10,28) - new Date()) / 864e5);
+    const t0 = new Date(); t0.setHours(0,0,0,0); const days = Math.round((new Date(2026,10,23) - t0) / 864e5);
     ov.querySelector('#g-rd').textContent = days > 1 ? `باقٍ ${days} يومًا على الفرح` : days === 1 ? 'الفرح غدًا بإذن الله 🎉' : days === 0 ? 'الفرح اليوم! 🎊' : '';
     if(surprise){ ov.querySelector('.g-surprise').classList.remove('g-hidden'); ov.querySelector('#g-inv').href = surprise.invite || './';
       ov.querySelector('#g-win h3').textContent = 'أحسنت! اكتمل قلب الحب 💜'; ov.querySelector('#g-wt').innerHTML = `تبادلتم ${GOAL} رميات حب 🌹`; }
