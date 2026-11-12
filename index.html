@@ -171,6 +171,22 @@
   .btn.ghost{background:#fff;color:var(--accent);border:1.5px solid #dccbe7;box-shadow:none}
   .btn:active{transform:scale(.95)}
   .footer{position:relative;margin-top:20px}
+  .wish{margin:30px auto 10px;max-width:460px;padding:24px 18px 20px;border-radius:22px;background:#ffffffa8;border:1px solid #e2d5ea;
+    box-shadow:0 10px 30px #8c6aa81a;backdrop-filter:blur(4px);cursor:auto}
+  .wish form{display:flex;flex-direction:column;gap:10px;margin-top:14px;text-align:right}
+  .wish input,.wish textarea{font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1.5px solid #e2d5ea;border-radius:14px;
+    padding:12px 14px;outline:none;-webkit-user-select:text;user-select:text;resize:vertical;transition:border-color .2s, box-shadow .2s}
+  .wish input:focus,.wish textarea:focus{border-color:var(--accent2);box-shadow:0 0 0 4px #c3aad633}
+  .wish .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font:inherit;font-size:13.5px;color:var(--accent);background:#f8f3fa;border:1px solid #e2d5ea;border-radius:999px;padding:6px 12px;cursor:pointer;text-align:right}
+  .chip:active{transform:scale(.97)}
+  .wish-send{width:100%;font-size:16px;padding:13px}
+  .wish-send[disabled]{opacity:.6}
+  .wish-err{min-height:1px;font-size:14px;color:#b4446c;text-align:center}
+  .wish-done{text-align:center;padding:10px 0 2px}
+  .wd-h{font-family:"Reem Kufi";font-size:24px;color:var(--accent);margin:10px 0 4px}
+  .wish-done p{color:var(--soft);font-size:15px;margin-bottom:14px}
   .afrahna{width:min(70%,330px);display:block;margin:0 auto;position:relative;z-index:1}
   .flowers{width:calc(100% + 32px);max-width:none;margin:-40px -16px 0;display:block;pointer-events:none}
   .ayah,.afrahna,.flowers{mix-blend-mode:multiply}
@@ -324,6 +340,28 @@
     <button class="btn" id="play">🎮 العب مع العروسين</button>
   </div>
 
+  <section class="wish rv" id="wish">
+    <div class="rules-head"><span>❀</span><h2>دفتر التهاني</h2><span>❀</span></div>
+    <p class="rules-intro">اترك تهنئتك للعروسين، تصلهما مباشرة 💌</p>
+    <form id="wishForm" novalidate>
+      <input id="wName" name="name" type="text" maxlength="60" placeholder="اسمك الكريم" autocomplete="name" required>
+      <div class="chips" aria-label="اقتراحات">
+        <button type="button" class="chip">بارك الله لكما وبارك عليكما وجمع بينكما في خير</button>
+        <button type="button" class="chip">اللهم ألّف بين قلبيهما واجعل بيتهما عامرًا بالمودّة والرحمة</button>
+        <button type="button" class="chip">ألف مبروك، دامت أفراحكم عامرة 💜</button>
+      </div>
+      <textarea id="wMsg" name="message" maxlength="600" rows="4" placeholder="اكتب تهنئتك هنا…" required></textarea>
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button type="submit" class="btn wish-send" id="wSend">أرسل التهنئة 💌</button>
+      <p class="wish-err" id="wErr" role="alert"></p>
+    </form>
+    <div class="wish-done" id="wDone" hidden>
+      <div class="wd-h">جزاك الله خيرًا 💜</div>
+      <p>وصلت تهنئتك إلى العروسين، شكرًا لمشاركتك فرحتنا</p>
+      <button type="button" class="btn ghost" id="wAgain">أرسل تهنئة أخرى</button>
+    </div>
+  </section>
+
   <div class="footer">
     <img class="afrahna rv" src="afrahna.webp" alt="أفراحنا تزدان بحضوركم">
     <img class="flowers" src="flowers.webp" alt="">
@@ -394,7 +432,7 @@ function heartsAt(x,y){
 }
 addEventListener('pointerdown', e=>{
   if(!intro.classList.contains('gone')) return;
-  if(e.target.closest('button,a,.btn,#game')) return;            // الأزرار والروابط لها وظائفها
+  if(e.target.closest('button,a,.btn,#game,input,textarea,.wish')) return;            // الأزرار والروابط لها وظائفها
   heartsAt(e.clientX,e.clientY);
   if(navigator.vibrate) try{ navigator.vibrate(8); }catch(_){}
 }, {passive:true});
@@ -513,6 +551,32 @@ document.getElementById('play').onclick=()=>{
   if(window.WeddingGame) return WeddingGame.open();
   const sc=document.createElement('script'); sc.src='game.js?v=10'; sc.onload=()=>WeddingGame.open(); document.head.appendChild(sc);
 };
+/* ===== دفتر التهاني: يُرسل كل تهنئة إلى الإيميل عبر FormSubmit ===== */
+const WISH_ENDPOINT = 'https://formsubmit.co/ajax/nammous.zuhair@gmail.com';   // يُستبدل بالاسم المرمّز بعد التفعيل
+(function(){
+  const f=document.getElementById('wishForm'), n=document.getElementById('wName'), m=document.getElementById('wMsg'),
+        b=document.getElementById('wSend'), err=document.getElementById('wErr'), done=document.getElementById('wDone');
+  document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{ m.value=c.textContent; m.focus(); });
+  document.getElementById('wAgain').onclick=()=>{ done.hidden=true; f.hidden=false; m.value=''; };
+  f.addEventListener('submit', async e=>{
+    e.preventDefault(); err.textContent='';
+    const name=n.value.trim(), msg=m.value.trim();
+    if(!name){ err.textContent='نرجو كتابة اسمك الكريم'; n.focus(); return; }
+    if(msg.length<2){ err.textContent='نرجو كتابة التهنئة'; m.focus(); return; }
+    if(f.elements._honey.value) return;
+    if(!WISH_ENDPOINT){ err.textContent='دفتر التهاني غير مفعّل بعد'; return; }
+    b.disabled=true; b.textContent='جارٍ الإرسال…';
+    try{
+      const r=await fetch(WISH_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify({'الاسم':name,'التهنئة':msg,_subject:'💌 تهنئة جديدة من '+name+' — زفاف مهند ودعاء',_template:'box',_captcha:'false'})});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok || String(j.success)==='false') throw new Error(j.message||r.status);
+      f.hidden=true; done.hidden=false; f.reset();
+      const q=done.getBoundingClientRect(); burst(q.left+q.width/2,q.top+30,90); heartsAt(q.left+q.width/2,q.top+40);
+    }catch(x){ err.textContent='تعذّر الإرسال، تأكد من الاتصال بالإنترنت ثم حاول مرة أخرى'; }
+    finally{ b.disabled=false; b.textContent='أرسل التهنئة 💌'; }
+  });
+})();
 document.getElementById('share').onclick=async()=>{
   const data={title:'دعوة زفاف مهند ودعاء',text:'يسعدنا حضوركم زفاف مهند ودعاء يوم الاثنين 2026.11.23 💜',url:SHARE_URL};
   try{ if(navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(SHARE_URL); toast('تم نسخ رابط الدعوة'); } }catch(e){}
