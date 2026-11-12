@@ -111,7 +111,7 @@
         </div>
         <div class="g-remind">
           <div class="g-rt">لا تنسوا موعدنا 💜</div>
-          <div class="g-ri"><span>📅 الاثنين 2026.11.23</span><span>🕐 الحفل من 1:00 إلى 3:30</span><span>📍 الصالة الدمشقية</span></div>
+          <div class="g-ri"><span>📅 الاثنين 2026.11.23</span><span>🕐 الحفل من 1:00 إلى 4:00</span><span>📍 الصالة الدمشقية</span></div>
           <div class="g-rd" id="g-rd"></div>
           <div class="g-rb"><button class="ghost" id="g-cal">أضف للتقويم</button><a class="ghost" id="g-map" href="https://maps.app.goo.gl/CLwcyqBLpvZDxUjZ7" target="_blank" rel="noopener">الاتجاهات للصالة</a></div>
         </div>

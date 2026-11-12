@@ -307,7 +307,7 @@
     </a>
     <div>
       <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M24 13v11l7 5"/></svg>
-      <span class="k">الحفل</span><span class="v">من 1:00 إلى 3:30</span>
+      <span class="k">الحفل</span><span class="v">من 1:00 إلى 4:00</span>
     </div>
   </div>
 
@@ -542,14 +542,14 @@ document.getElementById('celebrate').onclick=e=>{ const r=e.target.getBoundingCl
 document.getElementById('heart').onclick=e=>{ const h=e.currentTarget, r=h.getBoundingClientRect(); h.classList.remove('unite'); void h.offsetWidth; h.classList.add('unite'); setTimeout(()=>{ burst(r.left+r.width/2,r.top+r.height/2,70); heartsAt(r.left+r.width/2,r.top+r.height/2); },420); };
 document.getElementById('cal').onclick=()=>{
   const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//wedding//invite//AR','BEGIN:VEVENT',
-    'UID:muhannad-duaa-20261123','DTSTART:20261123T130000','DTEND:20261123T153000',
-    'SUMMARY:زفاف مهند ودعاء','LOCATION:الصالة الدمشقية — https://maps.app.goo.gl/CLwcyqBLpvZDxUjZ7','DESCRIPTION:الحفل من الساعة 1:00 إلى 3:30','END:VEVENT','END:VCALENDAR'].join('\r\n');
+    'UID:muhannad-duaa-20261123','DTSTART:20261123T130000','DTEND:20261123T160000',
+    'SUMMARY:زفاف مهند ودعاء','LOCATION:الصالة الدمشقية — https://maps.app.goo.gl/CLwcyqBLpvZDxUjZ7','DESCRIPTION:الحفل من الساعة 1:00 إلى 4:00','END:VEVENT','END:VCALENDAR'].join('\r\n');
   const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'})); a.download='زفاف-مهند-ودعاء.ics'; a.click();
   toast('تمت إضافة الموعد 📅');
 };
 document.getElementById('play').onclick=()=>{
   if(window.WeddingGame) return WeddingGame.open();
-  const sc=document.createElement('script'); sc.src='game.js?v=10'; sc.onload=()=>WeddingGame.open(); document.head.appendChild(sc);
+  const sc=document.createElement('script'); sc.src='game.js?v=11'; sc.onload=()=>WeddingGame.open(); document.head.appendChild(sc);
 };
 /* ===== دفتر التهاني: يُرسل كل تهنئة إلى الإيميل عبر FormSubmit ===== */
 const WISH_ENDPOINT = 'https://formsubmit.co/ajax/Mohannad.nammous@gmail.com';   // يُستبدل بالاسم المرمّز بعد التفعيل
