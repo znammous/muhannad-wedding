@@ -212,7 +212,7 @@
 </head>
 <body>
 <canvas id="petals"></canvas>
-<audio id="welcome" src="welcome.mp3?v=1" preload="auto"></audio>
+<audio id="welcome" src="welcome.mp3?v=2" preload="auto"></audio>
 <button id="music" aria-label="تشغيل/إيقاف صوت العصافير">🐦</button>
 
 <section id="intro">
@@ -450,10 +450,12 @@ function stopMusic(){ musicOn=false; clearTimeout(musicTimer); if(master) master
 /* ===== المقطع الصوتي الترحيبي: يعمل مرة واحدة بعد فتح الظرف ثم تبدأ العصافير ===== */
 const welcome=document.getElementById('welcome'); let clipOn=false, muted=false;
 function playWelcome(){
-  welcome.currentTime=0;
+  welcome.currentTime=0; try{ welcome.volume=1; }catch(e){}
   const p=welcome.play(); clipOn=true; document.getElementById('music').textContent='🔊';
   if(p && p.catch) p.catch(()=>{ clipOn=false; try{ startMusic(); }catch(e){} });
 }
+// خفوت تدريجي في آخر نصف ثانية بدل التوقف المفاجئ
+welcome.addEventListener('timeupdate',()=>{ const left=welcome.duration-welcome.currentTime; if(isFinite(left)) try{ welcome.volume=Math.max(0,Math.min(1,left/.6)); }catch(e){} });
 welcome.addEventListener('ended',()=>{ clipOn=false; if(!muted) try{ startMusic(); }catch(e){} });
 document.getElementById('music').onclick=()=>{
   if(clipOn){ welcome.pause(); clipOn=false; muted=true; stopMusic(); return; }
