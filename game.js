@@ -10,6 +10,7 @@
   let mode = 'ai', human = 'm', turn = 'm', st = 'menu', surprise = null;
   let score = {m:0, d:0}, love = 0, wind = 0;
   let proj = null, aim = null, particles = [], floats = [], poses = {m:'idle', d:'idle'}, poseT = {m:0, d:0};
+  let portrait = false, fire, fireFill;
   let tWorld = 0, last = 0, raf = 0, turnTimer = 0, aiThrows = 0;
   let actx;
 
@@ -42,6 +43,17 @@
       background:#8c6aa8;color:#fff;box-shadow:0 8px 18px #8c6aa855}
     .g-card button.ghost{background:#fff;color:#8c6aa8;border:1.5px solid #dccbe7;box-shadow:none}
     .g-hidden{display:none!important}
+    .g-fire{position:absolute;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:2;
+      width:min(88vw,380px);height:68px;border-radius:999px;border:2px solid #fff;overflow:hidden;cursor:pointer;
+      background:#8c6aa8;color:#fff;font:inherit;font-size:17px;font-weight:500;box-shadow:0 12px 28px #5b3f7355;
+      touch-action:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;
+      opacity:0;pointer-events:none;transition:opacity .25s, transform .15s}
+    .g-fire.show{opacity:1;pointer-events:auto;animation:gfire 1.6s ease-in-out infinite}
+    .g-fire.hold{animation:none;transform:translateX(-50%) scale(.96)}
+    @keyframes gfire{50%{box-shadow:0 12px 34px #8c6aa8aa}}
+    .g-fire i{position:absolute;inset:0;left:auto;width:0;background:linear-gradient(90deg,#c3aad6,#e889b0)}
+    .g-fire span{position:relative}
+    @media (orientation:landscape){.g-fire{display:none}}
     .g-surprise{margin:4px 0 6px}
     .g-sp1{font-family:"Reem Kufi",sans-serif;font-size:26px;color:#e06c9f;animation:gpop 1s ease-in-out infinite alternate}
     @keyframes gpop{to{transform:scale(1.08)}}
@@ -80,6 +92,7 @@
         <div class="g-wind"><span id="g-wa">←</span> الرياح <span class="bar"><em id="g-wb"></em></span></div>
         <div class="g-msg" id="g-msg"></div>
       </div>
+      <button class="g-fire" id="g-fire" aria-label="اضغط مطوّلًا ثم أفلت للرمي"><i></i><span>اضغط مطوّلًا ثم أفلت للرمي 🌹</span></button>
       <button class="g-close" aria-label="إغلاق اللعبة">✕</button>
       <div class="g-panel" id="g-menu"><div class="g-card">
         <h3>رمية حب 💐</h3>
@@ -114,7 +127,10 @@
     ov.querySelector('#g-again').onclick = () => { ov.querySelector('#g-win').classList.add('g-hidden'); ov.querySelector('#g-menu').classList.remove('g-hidden'); st='menu'; };
     ov.querySelectorAll('#g-menu button').forEach(b => b.onclick = () => start(b.dataset.p));
     ov.querySelectorAll('.g-av').forEach(avatar);
-    cv.addEventListener('pointerdown', down); addEventListener('pointermove', move); addEventListener('pointerup', up); addEventListener('pointercancel', up);
+    cv.addEventListener('pointerdown', down);
+    fire = ov.querySelector('#g-fire'); fireFill = fire.querySelector('i');
+    fire.addEventListener('pointerdown', e => { e.preventDefault(); down(e); });
+    fire.addEventListener('contextmenu', e => e.preventDefault()); addEventListener('pointermove', move); addEventListener('pointerup', up); addEventListener('pointercancel', up);
     addEventListener('resize', resize);
   }
 
@@ -122,7 +138,9 @@
     if(!cv) return;
     dpr = devicePixelRatio || 1; W = innerWidth; H = innerHeight;
     cv.width = W*dpr; cv.height = H*dpr;
-    WW = W > H ? 1000 : 660; scale = W/WW; WH = H/scale; GY = WH - 70;
+    portrait = H > W;
+    WW = portrait ? 660 : 1000; scale = W/WW; WH = H/scale;
+    GY = portrait ? Math.round(WH*.6) : WH - 70;          // في الجوال الطولي: الشخصيات في المنتصف وزر الرمي أسفلها
   }
 
   /* ---------- مواقع ---------- */
@@ -386,7 +404,7 @@
     ctx.fillStyle = g; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(cx0-8, top+hgt-3-fh, 16, fh, 8) : ctx.rect(cx0-8, top+hgt-3-fh, 16, fh); ctx.fill();
     ctx.fillStyle = '#8c6aa8'; ctx.textAlign = 'center'; ctx.font = '500 13px "IBM Plex Sans Arabic", sans-serif';
     ctx.fillText('القوة', cx0, top - 8);
-    if(!aim){ ctx.globalAlpha = .6 + .4*Math.sin(tWorld*4); ctx.font = '22px sans-serif'; ctx.fillText('👆', cx0, top + hgt + 30); ctx.globalAlpha = 1; }
+    if(!aim && !portrait){ ctx.globalAlpha = .6 + .4*Math.sin(tWorld*4); ctx.font = '22px sans-serif'; ctx.fillText('👆', cx0, top + hgt + 30); ctx.globalAlpha = 1; }
   }
   function drawFx(){
     for(const p of particles){ const k = 1 - p.t/p.life; ctx.save(); ctx.globalAlpha = Math.max(0,k); ctx.translate(p.x,p.y); ctx.rotate(p.a); ctx.fillStyle = p.c;
@@ -402,7 +420,10 @@
   }
   function loop(ts){
     const dt = Math.min(.033, (ts - last)/1000 || 0); last = ts;
-    step(dt); draw(); raf = requestAnimationFrame(loop);
+    step(dt); draw();
+    if(fire){ const show = portrait && st==='aim' && isHuman(turn); fire.classList.toggle('show', show); fire.classList.toggle('hold', !!aim);
+      fireFill.style.width = (aim ? aimPower()*100 : 0) + '%'; }
+    raf = requestAnimationFrame(loop);
   }
 
   /* صورة مصغّرة للشخصية (الرأس والكتفان) */
