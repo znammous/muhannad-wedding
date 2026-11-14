@@ -231,7 +231,7 @@
 </head>
 <body>
 <canvas id="petals"></canvas>
-<audio id="welcome" src="welcome.mp3?v=2" preload="auto"></audio>
+<audio id="welcome" src="welcome.m4a?v=1" preload="auto"></audio>
 <button id="music" aria-label="تشغيل/إيقاف صوت العصافير">🐦</button>
 
 <section id="intro">
@@ -495,8 +495,7 @@ function playWelcome(){
   const p=welcome.play(); clipOn=true; document.getElementById('music').textContent='🔊';
   if(p && p.catch) p.catch(()=>{ clipOn=false; try{ startMusic(); }catch(e){} });
 }
-// خفوت تدريجي في آخر نصف ثانية بدل التوقف المفاجئ
-welcome.addEventListener('timeupdate',()=>{ const left=welcome.duration-welcome.currentTime; if(isFinite(left)) try{ welcome.volume=Math.max(0,Math.min(1,left/.6)); }catch(e){} });
+// الخفوت في البداية والنهاية مدمج في ملف الصوت نفسه
 welcome.addEventListener('ended',()=>{ clipOn=false; if(!muted) try{ startMusic(); }catch(e){} });
 document.getElementById('music').onclick=()=>{
   if(clipOn){ welcome.pause(); clipOn=false; muted=true; stopMusic(); return; }
