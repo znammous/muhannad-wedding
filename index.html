@@ -531,6 +531,8 @@ document.getElementById('music').onclick=()=>{
 };
 
 /* ===== فتح الظرف ===== */
+if('scrollRestoration' in history) history.scrollRestoration='manual';
+if(location.hash) scrollTo(0,0);
 const env=document.getElementById('env'), intro=document.getElementById('intro');
 function openInvite(){
   if(env.classList.contains('open')) return;
@@ -538,6 +540,7 @@ function openInvite(){
   try{ actx = actx || new (window.AudioContext||window.webkitAudioContext)(); actx.resume(); }catch(e){}
   playWelcome();
   setTimeout(()=>{ intro.classList.add('gone'); burst(W/2,H*.35,120); reveal(); document.getElementById('music').style.display='grid';
+    if(location.hash==='#wish') setTimeout(()=>{ const w=document.getElementById('wish'); w.classList.add('in'); w.scrollIntoView({behavior:'smooth',block:'start'}); },900);
     setTimeout(()=>{ if(scrollY<40) hint.classList.add('show'); },2200); },1500);
 }
 env.addEventListener('click', openInvite);
