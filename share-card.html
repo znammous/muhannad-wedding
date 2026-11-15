@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>بطاقة الدعوة للمشاركة</title>
+<!-- صفحة لتوليد صورة البطاقة (1080×1920) للمشاركة على واتساب — لا تُنشر على الموقع -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500&family=Reem+Kufi:wght@500;600&family=Readex+Pro:wght@600&family=El+Messiri:wght@700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<style>
+  :root{--ink:#3b2c4a;--soft:#7d6a8f;--accent:#8c6aa8;--accent2:#b597cc;--plum:#4A2C63}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1920px;overflow:hidden}
+  body{font-family:"IBM Plex Sans Arabic",sans-serif;color:var(--ink);position:relative;text-align:center;
+    background:radial-gradient(120% 70% at 50% 0%,#fdfbfe 0%,#f4eef5 55%,#ebe1ef 100%)}
+  .fl-top{position:absolute;top:-250px;left:0;width:1080px;transform:scaleY(-1);opacity:.45;mix-blend-mode:multiply}
+  .fl-bot{position:absolute;bottom:-250px;left:0;width:1080px;mix-blend-mode:multiply}
+  .frame{position:absolute;inset:26px;border:2px solid #d9c6e5;border-radius:34px}
+  .frame::after{content:"";position:absolute;inset:10px;border:1px solid #e9dff0;border-radius:26px}
+  .wrap{position:relative;z-index:2;padding:78px 66px 0}
+  .ayah{width:500px;display:block;margin:0 auto;mix-blend-mode:multiply}
+  .clan{font-family:"Readex Pro";font-weight:600;font-size:42px;color:var(--plum);margin-top:16px}
+  .top{font-size:27px;color:var(--soft);margin-top:6px}
+  .fathers{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:10px;margin-top:6px}
+  .fa{display:flex;flex-direction:column;align-items:center}
+  .fa .t{font-size:26px;color:var(--accent)}
+  .fa .n{font-family:"El Messiri";font-weight:700;font-size:47px;color:var(--plum);line-height:1.3;white-space:nowrap}
+  .amp{font-family:"Reem Kufi";font-size:42px;color:var(--accent2);padding-bottom:12px}
+  .lead{font-size:31px;margin-top:6px}
+  .div{display:flex;align-items:center;gap:14px;width:760px;margin:14px auto;color:var(--accent2);font-size:26px}
+  .div::before,.div::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,transparent,#a58bbd,transparent)}
+  .couple{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+  .p{display:flex;flex-direction:column;align-items:center}
+  .p .k{font-size:28px;color:var(--soft)}
+  .p img{height:158px;filter:drop-shadow(0 10px 16px #8c6aa838)}
+  .heart{position:relative;width:120px;margin-top:34px}
+  .heart svg{width:120px;display:block;overflow:visible;filter:drop-shadow(0 8px 12px #8c6aa838)}
+  .heart img{position:absolute;left:50%;top:50%;width:26%;transform:translate(-50%,-46%)}
+  .when{font-size:28px;color:var(--soft)}
+  .day{font-family:"Reem Kufi";font-weight:600;font-size:60px;color:var(--accent);line-height:1.35}
+  .ladies{display:inline-block;margin-top:4px;padding:10px 40px;border-radius:999px;color:#fff;font-weight:500;font-size:30px;
+    background:linear-gradient(90deg,#4A2C63,#8c6aa8);box-shadow:0 12px 28px #4a2c6340}
+  .ladies span{color:#e7d6f1;margin:0 10px;font-size:.8em}
+  .info{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:14px;margin:20px 0 0}
+  .c{background:#ffffffd9;border:1.5px solid #ece2f1;border-radius:24px;padding:14px 10px;box-shadow:0 10px 26px #8c6aa814;
+    display:flex;flex-direction:column;align-items:center;gap:4px}
+  .c svg{width:40px;height:40px;stroke:var(--accent);fill:none;stroke-width:1.8;margin-bottom:4px}
+  .c .k{font-size:25px;color:var(--soft)}
+  .c .v{font-size:32px;font-weight:500;color:var(--ink);line-height:1.3}
+  .c .a{font-size:19.5px;color:var(--soft);line-height:1.6;margin-top:4px}
+  .qr{position:relative;z-index:3;margin:20px auto 0;width:max-content;display:flex;align-items:center;gap:22px;
+    background:#fff;border-radius:28px;padding:16px 26px 16px 18px;box-shadow:0 14px 34px #5b3f7330}
+  .qr #q{width:124px;height:124px}
+  .qr #q img,.qr #q svg{width:124px;height:124px;display:block}
+  .qr .tx{text-align:right}
+  .afrah{display:block;width:380px;margin:26px auto 0;mix-blend-mode:multiply}
+  .qr .tx b{display:block;font-size:27px;font-weight:500;color:var(--plum)}
+  .qr .tx span{display:block;font-size:24px;color:var(--soft);margin-top:4px;direction:ltr;text-align:right}
+</style>
+</head>
+<body>
+<img class="fl-top" src="flowers.webp" alt="">
+<div class="frame"></div>
+<div class="wrap">
+  <img class="ayah" src="ayah.webp" alt="">
+  <p class="clan">أفراح آل النموس وآل خضر</p>
+  <p class="top">يتشرف</p>
+  <div class="fathers">
+    <div class="fa"><span class="t">السيد</span><span class="n">عاطف النموس</span></div>
+    <div class="amp">و</div>
+    <div class="fa"><span class="t">السيد</span><span class="n">محمد فؤاد خضر</span></div>
+  </div>
+  <p class="lead">بدعوتكم لحضور حفل زفاف</p>
+  <div class="div">❀</div>
+  <div class="couple">
+    <div class="p"><span class="k">ابنه</span><img src="name-muhannad.webp?v=2" alt=""></div>
+    <div class="heart">
+      <svg viewBox="0 0 200 192"><defs><g id="dal"><path d="M95 58 C88 26 60 10 34 22 C8 34 4 72 32 106 C56 136 86 160 110 186 L106 176 C84 154 64 130 48 108 C24 76 24 46 42 36 C60 26 84 36 91 62 Z"/><path d="M91 62 C90 50 86 42 78 36 C84 34 90 33 96 34 C97 42 97 52 95 58 Z"/></g></defs><g fill="#c3aad6"><use href="#dal"/></g><g fill="#8c6aa8"><use href="#dal" transform="translate(200 0) scale(-1 1)"/></g></svg>
+      <img src="name-waw.webp" alt="">
+    </div>
+    <div class="p"><span class="k">كريمته</span><img src="name-duaa.webp" alt=""></div>
+  </div>
+  <div class="div">❀</div>
+  <p class="when">وذلك بمشيئة الله تعالى</p>
+  <p class="day">يوم الاثنين</p>
+  <p class="ladies"><span>❀</span>الحفل خاصّ بالسيدات<span>❀</span></p>
+  <div class="info">
+    <div class="c">
+      <svg viewBox="0 0 48 48"><rect x="7" y="10" width="34" height="31" rx="4"/><path d="M7 18h34M15 6v8M33 6v8"/><path d="M15 25h4M22 25h4M29 25h4M15 32h4M22 32h4M29 32h4"/></svg>
+      <span class="k">التاريخ</span><span class="v">2026.11.23</span>
+    </div>
+    <div class="c">
+      <svg viewBox="0 0 48 48"><path d="M24 43s-13-13-13-23a13 13 0 0 1 26 0c0 10-13 23-13 23z"/><circle cx="24" cy="20" r="5"/></svg>
+      <span class="k">الصالة</span><span class="v">الدمشقية</span>
+      <span class="a">دمشق – المنطقة الصناعية<br>قرب دوّار البيطرة<br>جانب نادي النضال الرياضي</span>
+    </div>
+    <div class="c">
+      <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M24 13v11l7 5"/></svg>
+      <span class="k">موعد الحفل</span><span class="v">من 1:00<br>إلى 4:00</span>
+    </div>
+  </div>
+<div class="qr">
+    <div id="q"></div>
+    <div class="tx"><b>امسح الرمز لفتح الدعوة</b><span>muhannad-wedding.web.app</span></div>
+  </div>
+  <img class="afrah" src="afrahna.webp" alt="">
+</div>
+<img class="fl-bot" src="flowers.webp" alt="">
+<script>
+  const qr = qrcode(0, 'M'); qr.addData('https://muhannad-wedding.web.app/?v=7'); qr.make();
+  document.getElementById('q').innerHTML = qr.createSvgTag({cellSize:4, margin:0, scalable:true});
+  document.querySelector('#q svg path').setAttribute('fill', '#4A2C63');
+</script>
+</body>
+</html>
