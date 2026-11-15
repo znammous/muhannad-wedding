@@ -127,7 +127,9 @@
   .seal svg{width:40px;height:40px;overflow:visible}
   #heart .waw{position:absolute;left:50%;top:50%;width:24%;height:auto;transform:translate(-50%,-46%)}
   @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.2)}30%{transform:scale(1)}45%{transform:scale(1.12)}}
-  .when{font-size:clamp(17px,4.6vw,20px);margin-top:4px}
+  .when-box{margin-top:6px}
+  .when{font-size:clamp(16px,4.4vw,19px);color:var(--soft)}
+  .when-day{font-family:"Reem Kufi";font-weight:600;font-size:clamp(30px,8.6vw,40px);color:var(--accent);line-height:1.5}
 
   .countdown{display:flex;justify-content:center;gap:10px;margin:26px 0 8px;direction:rtl}
   .cd{
@@ -138,24 +140,28 @@
   .cd small{font-size:13px;color:var(--soft)}
   .cd-title{font-size:14px;color:var(--soft);margin-top:18px}
 
-  .info{display:grid;grid-template-columns:repeat(3,1fr);margin:30px 0 10px}
-  .info > *{padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:6px}
-  .info > * + *{border-right:1.5px solid var(--line)}
-  .info svg{width:44px;height:44px;stroke:var(--accent);fill:none;stroke-width:1.6}
-  .info .k{font-size:16px;color:var(--soft)}
-  .info .v{font-size:16px;font-weight:500}
-  .addr{display:flex;align-items:center;justify-content:center;gap:8px;max-width:440px;margin:4px auto 0;padding:10px 14px;
-    color:var(--ink);text-decoration:none;font-size:clamp(14.5px,3.9vw,16px);line-height:1.7;background:#ffffff8c;border:1px solid #e8dcef;border-radius:16px}
-  .addr span{text-wrap:balance}
-  .addr svg{flex:0 0 22px;width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:2}
-  .ladies{display:table;margin:14px auto 0;padding:7px 20px;border-radius:999px;font-weight:500;font-size:clamp(15px,4.2vw,17px);
-    color:var(--plum);background:linear-gradient(90deg,#f6eefa,#fbeef4);border:1px solid #e6d3ec;box-shadow:0 4px 14px #8c6aa81c}
-  .ladies span{color:var(--accent2);font-size:.85em;margin:0 4px}
+  .icards{display:flex;flex-direction:column;gap:12px;max-width:420px;margin:22px auto 8px}
+  .icard{display:flex;align-items:center;gap:14px;padding:14px 18px;background:#ffffffd0;border:1px solid #ece2f1;border-radius:18px;
+    box-shadow:0 8px 22px #8c6aa814;color:inherit;text-decoration:none;text-align:right}
+  .icard i{flex:0 0 52px;width:52px;height:52px;border-radius:50%;background:#f4edf8;display:grid;place-items:center}
+  .icard svg{width:28px;height:28px;stroke:var(--accent);fill:none;stroke-width:1.8}
+  .icard>div{display:flex;flex-direction:column;gap:1px}
+  .icard .k{font-size:15px;color:var(--soft)}
+  .icard .v{font-size:clamp(20px,5.6vw,24px);font-weight:500;color:var(--ink)}
+  .icard .ad{font-size:14px;line-height:1.8;color:var(--soft);margin-top:4px}
+  .ladies{display:table;margin:14px auto 0;padding:9px 24px;border-radius:999px;font-weight:500;font-size:clamp(15px,4.2vw,17px);
+    color:#fff;background:linear-gradient(90deg,#4A2C63,#8c6aa8);box-shadow:0 8px 20px #4a2c6340}
+  .ladies span{color:#e7d6f1;font-size:.85em;margin:0 6px}
+  .outro{text-align:center;margin-top:6px;position:relative;z-index:1}
+  .o-names{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0 4px}
+  .o-names img{height:clamp(54px,15vw,72px);width:auto}
+  .o-names svg{width:clamp(30px,8vw,40px);height:auto;overflow:visible;margin-top:10px}
+  .o-pill{display:table;margin:6px auto 0;padding:8px 20px;border-radius:999px;background:#fff;box-shadow:0 6px 18px #8c6aa81f;
+    font-weight:500;font-size:clamp(14.5px,4vw,17px);color:var(--ink)}
+  .o-pill span{color:var(--accent2);margin:0 6px}.o-pill b{font-weight:500}
+  .o-addr{margin-top:12px;font-size:clamp(14px,3.8vw,15.5px);line-height:1.8;color:var(--soft)}
+  .o-dua{margin:12px 0 54px;font-size:clamp(16px,4.4vw,18px);color:var(--accent)}
   .venue{color:inherit;text-decoration:none}
-  .info .tm{display:grid;grid-template-columns:auto auto;gap:2px 6px;line-height:1.5}
-  .info .tm>span{display:contents}
-  .info .tm b{font-weight:500;text-align:left;font-variant-numeric:tabular-nums}
-  .venue .v{border-bottom:1px dashed var(--line)}
 
   .rules{margin:34px auto 22px;max-width:460px;padding:24px 18px 20px;border-radius:22px;
     background:#ffffffa8;border:1px solid #e2d5ea;box-shadow:0 10px 30px #8c6aa81a;backdrop-filter:blur(4px)}
@@ -296,7 +302,28 @@
 
   <div class="divider rv"><span>❀</span></div>
 
-  <p class="when rv">وذلك بمشيئة الله تعالى يوم الاثنين</p>
+  <div class="when-box rv">
+    <p class="when">وذلك بمشيئة الله تعالى</p>
+    <p class="when-day">يوم الاثنين</p>
+  </div>
+  <div class="divider rv"><span>❀</span></div>
+  <p class="ladies rv"><span>❀</span> الحفل خاصّ بالسيدات <span>❀</span></p>
+
+  <div class="icards rv">
+    <div class="icard">
+      <i><svg viewBox="0 0 48 48"><rect x="7" y="10" width="34" height="31" rx="4"/><path d="M7 18h34M15 6v8M33 6v8"/><path d="M15 25h4M22 25h4M29 25h4M15 32h4M22 32h4M29 32h4"/></svg></i>
+      <div><span class="k">التاريخ</span><span class="v">2026.11.23</span></div>
+    </div>
+    <a class="icard venue" href="https://maps.app.goo.gl/CLwcyqBLpvZDxUjZ7" target="_blank" rel="noopener">
+      <i><svg viewBox="0 0 48 48"><path d="M24 43s-13-13-13-23a13 13 0 0 1 26 0c0 10-13 23-13 23z"/><circle cx="24" cy="20" r="5"/></svg></i>
+      <div><span class="k">الصالة</span><span class="v">الدمشقية</span>
+        <span class="ad">دمشق – المنطقة الصناعية<br>قرب دوّار البيطرة<br>جانب نادي النضال الرياضي</span></div>
+    </a>
+    <div class="icard">
+      <i><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M24 13v11l7 5"/></svg></i>
+      <div><span class="k">موعد الحفل</span><span class="v">من 1:00 إلى 4:00</span></div>
+    </div>
+  </div>
 
   <p class="cd-title rv">باقٍ على يوم الفرح</p>
   <div class="countdown rv" id="cd">
@@ -306,26 +333,6 @@
     <div class="cd"><b id="s">0</b><small>ثانية</small></div>
   </div>
 
-  <div class="info rv">
-    <div>
-      <svg viewBox="0 0 48 48"><rect x="7" y="10" width="34" height="31" rx="4"/><path d="M7 18h34M15 6v8M33 6v8"/><path d="M15 25h4M22 25h4M29 25h4M15 32h4M22 32h4M29 32h4"/></svg>
-      <span class="k">الاثنين</span><span class="v">2026.11.23</span>
-    </div>
-    <a href="https://maps.app.goo.gl/CLwcyqBLpvZDxUjZ7" target="_blank" rel="noopener" class="venue">
-      <svg viewBox="0 0 48 48"><path d="M24 43s-13-13-13-23a13 13 0 0 1 26 0c0 10-13 23-13 23z"/><circle cx="24" cy="20" r="5"/></svg>
-      <span class="k">الصالة</span><span class="v">الدمشقية</span>
-    </a>
-    <div>
-      <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M24 13v11l7 5"/></svg>
-      <span class="k">الحفل</span><span class="v tm"><span>من <b>1:00</b></span><span>إلى <b>4:00</b></span></span>
-    </div>
-  </div>
-
-  <a class="addr rv" href="https://maps.app.goo.gl/CLwcyqBLpvZDxUjZ7" target="_blank" rel="noopener">
-    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 43s-13-13-13-23a13 13 0 0 1 26 0c0 10-13 23-13 23z"/><circle cx="24" cy="20" r="5"/></svg>
-    <span>دمشق، المنطقة الصناعية، قرب دوّار البيطرة، بجانب نادي النضال الرياضي</span>
-  </a>
-  <p class="ladies rv"><span>❀</span> الحفل خاص بالسيدات <span>❀</span></p>
 
   <section class="rules rv">
     <div class="rules-head"><span>❀</span><h2>رجاءٌ ومحبّة</h2><span>❀</span></div>
@@ -380,6 +387,14 @@
 
   <div class="footer">
     <img class="afrahna rv" src="afrahna.webp" alt="أفراحنا تزدان بحضوركم">
+    <div class="outro rv">
+      <div class="divider"><span>❀</span></div>
+      <div class="o-names"><img src="name-muhannad.webp?v=2" alt="مهند"><svg viewBox="0 0 200 192" aria-hidden="true"><g fill="#c3aad6"><use href="#dal"/></g><g fill="#8c6aa8"><use href="#dal" transform="translate(200 0) scale(-1 1)"/></g></svg><img src="name-duaa.webp" alt="دعاء"></div>
+      <p class="o-pill">الاثنين <b>2026.11.23</b> <span>❀</span> الصالة الدمشقية</p>
+      <p class="ladies"><span>❀</span> الحفل خاصّ بالسيدات <span>❀</span></p>
+      <p class="o-addr">دمشق – المنطقة الصناعية، قرب دوّار البيطرة<br>جانب نادي النضال الرياضي</p>
+      <p class="o-dua">ولا تنسوا العروسين من صالح دعائكم</p>
+    </div>
     <img class="flowers" src="flowers.webp" alt="">
   </div>
 </main>
