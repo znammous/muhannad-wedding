@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>بطاقة تحديث المكان والموعد</title>
+<!-- صفحة لتوليد صورة إعلان التحديث (1080×1350) للمشاركة على واتساب — لا تُنشر على الموقع -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500&family=Reem+Kufi:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<style>
+  :root{--ink:#3b2c4a;--soft:#7d6a8f;--accent:#8c6aa8;--accent2:#b597cc;--plum:#4A2C63;--rose:#c2457a}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;height:1350px;overflow:hidden}
+  body{font-family:"IBM Plex Sans Arabic",sans-serif;color:var(--ink);position:relative;text-align:center;
+    background:radial-gradient(120% 70% at 50% 0%,#fdfbfe 0%,#f4eef5 55%,#ebe1ef 100%)}
+  .fl-top{position:absolute;top:-250px;left:0;width:1080px;transform:scaleY(-1);opacity:.45;mix-blend-mode:multiply}
+  .fl-bot{position:absolute;bottom:-270px;left:0;width:1080px;mix-blend-mode:multiply}
+  .frame{position:absolute;inset:26px;border:2px solid #d9c6e5;border-radius:34px}
+  .frame::after{content:"";position:absolute;inset:10px;border:1px solid #e9dff0;border-radius:26px}
+  .wrap{position:relative;z-index:2;padding:86px 80px 0}
+  .badge{display:inline-block;padding:12px 40px;border-radius:999px;color:#fff;font-weight:500;font-size:34px;
+    background:linear-gradient(90deg,var(--rose),var(--accent));box-shadow:0 12px 28px #c2457a40}
+  h1{font-family:"Reem Kufi";font-weight:600;font-size:66px;color:var(--plum);line-height:1.35;margin-top:22px}
+  .sub{font-size:30px;color:var(--soft);margin-top:4px}
+  .names{display:flex;align-items:center;justify-content:center;gap:18px;margin:16px 0 8px;filter:drop-shadow(0 8px 14px #8c6aa830)}
+  .names img{height:118px}
+  .names svg{width:62px;overflow:visible;margin-top:22px}
+  .row{display:flex;align-items:center;gap:22px;background:#ffffffde;border:1.5px solid #ece2f1;border-radius:28px;
+    padding:22px 28px;margin-top:20px;box-shadow:0 10px 26px #8c6aa814;text-align:right}
+  .row i{flex:0 0 78px;width:78px;height:78px;border-radius:50%;background:#f4edf8;display:grid;place-items:center}
+  .row svg{width:42px;height:42px;stroke:var(--accent);fill:none;stroke-width:1.8}
+  .row .k{display:block;font-size:26px;color:var(--soft)}
+  .row .k em{font-style:normal;font-size:20px;color:#fff;background:var(--rose);border-radius:999px;padding:2px 14px;margin-right:8px;vertical-align:3px}
+  .row .v{display:block;font-size:40px;font-weight:500;color:var(--ink);line-height:1.4}
+  .row .a{display:block;font-size:28px;color:var(--soft)}
+  .ladies{display:inline-block;margin-top:24px;padding:10px 38px;border-radius:999px;color:#fff;font-weight:500;font-size:28px;
+    background:linear-gradient(90deg,#4A2C63,#8c6aa8)}
+  .ladies span{color:#e7d6f1;margin:0 10px;font-size:.8em}
+  .qr{display:flex;align-items:center;gap:20px;width:max-content;margin:24px auto 0;background:#fff;border-radius:26px;
+    padding:14px 24px 14px 16px;box-shadow:0 12px 30px #5b3f7330}
+  .qr #q,.qr #q svg{width:112px;height:112px;display:block}
+  .qr .tx{text-align:right}
+  .qr .tx b{display:block;font-size:27px;font-weight:500;color:var(--plum)}
+  .qr .tx span{display:block;font-size:22px;color:var(--soft);margin-top:2px}
+</style>
+</head>
+<body>
+<img class="fl-top" src="flowers.webp" alt="">
+<div class="frame"></div>
+<div class="wrap">
+  <span class="badge">📢 تنبيه</span>
+  <h1>تحديث مكان وموعد الحفل</h1>
+  <p class="sub">نودّ إعلامكم بتغيير مكان وموعد حفل زفاف</p>
+  <div class="names">
+    <img src="name-muhannad.webp?v=2" alt="">
+    <svg viewBox="0 0 200 192"><defs><g id="dal"><path d="M95 58 C88 26 60 10 34 22 C8 34 4 72 32 106 C56 136 86 160 110 186 L106 176 C84 154 64 130 48 108 C24 76 24 46 42 36 C60 26 84 36 91 62 Z"/><path d="M91 62 C90 50 86 42 78 36 C84 34 90 33 96 34 C97 42 97 52 95 58 Z"/></g></defs><g fill="#c3aad6"><use href="#dal"/></g><g fill="#8c6aa8"><use href="#dal" transform="translate(200 0) scale(-1 1)"/></g></svg>
+    <img src="name-duaa.webp" alt="">
+  </div>
+
+  <div class="row">
+    <i><svg viewBox="0 0 48 48"><path d="M24 43s-13-13-13-23a13 13 0 0 1 26 0c0 10-13 23-13 23z"/><circle cx="24" cy="20" r="5"/></svg></i>
+    <div><span class="k">الصالة <em>جديد</em></span><span class="v">صالة زين العابدين</span><span class="a">ميدان أبو حبل</span></div>
+  </div>
+  <div class="row">
+    <i><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M24 13v11l7 5"/></svg></i>
+    <div><span class="k">الموعد <em>جديد</em></span><span class="v">من 7:00 إلى 10:00 مساءً</span><span class="a">الاثنين 2026.11.23</span></div>
+  </div>
+
+  <p class="ladies"><span>❀</span>الحفل خاصّ بالسيدات<span>❀</span></p>
+
+  <div class="qr">
+    <div id="q"></div>
+    <div class="tx"><b>امسح الرمز لفتح الموقع</b><span>على خرائط Google</span></div>
+  </div>
+</div>
+<img class="fl-bot" src="flowers.webp" alt="">
+<script>
+  const qr = qrcode(0, 'M'); qr.addData('https://maps.app.goo.gl/b1a1QVcZ6QZoaZzB7'); qr.make();
+  document.getElementById('q').innerHTML = qr.createSvgTag({cellSize:4, margin:0, scalable:true});
+  document.querySelector('#q svg path').setAttribute('fill', '#4A2C63');
+</script>
+</body>
+</html>
