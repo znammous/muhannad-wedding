@@ -83,6 +83,24 @@
   .env.open .seal{opacity:0}
   .env.open .env-letter{transform:translateY(-45%)}
   .hint{color:var(--soft);font-size:15px;letter-spacing:.3px;animation:fade 2s ease-in-out infinite}
+  .upd-ribbon{margin-bottom:-12px;padding:9px 18px;border-radius:999px;font-size:15px;font-weight:500;color:#fff;
+    background:linear-gradient(90deg,#c2457a,#8c6aa8);box-shadow:0 8px 20px #c2457a40;animation:updPulse 1.6s ease-in-out infinite}
+  @keyframes updPulse{50%{transform:scale(1.05);box-shadow:0 10px 26px #c2457a66}}
+  .new{font-style:normal;font-size:11.5px;font-weight:500;color:#fff;background:#c2457a;border-radius:999px;padding:1px 8px;margin-right:4px;vertical-align:2px}
+  .upd{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:16px;background:#3b2c4a66;
+    backdrop-filter:blur(3px);animation:updIn .35s ease}
+  .upd[hidden]{display:none}
+  @keyframes updIn{from{opacity:0}}
+  .upd-card{width:min(100%,380px);background:#fff;border-radius:24px;padding:22px 20px 18px;text-align:center;box-shadow:0 24px 60px #3b2c4a55;
+    animation:updPop .45s cubic-bezier(.2,.9,.3,1.2)}
+  @keyframes updPop{from{transform:scale(.85);opacity:0}}
+  .upd-ic{font-size:36px;animation:updPulse 1.6s ease-in-out infinite;display:inline-block}
+  .upd-card h3{font-family:"Reem Kufi";font-weight:600;font-size:24px;color:#c2457a;margin:4px 0 2px}
+  .upd-sub{color:var(--soft);font-size:15px;margin-bottom:12px}
+  .upd-row{display:flex;flex-direction:column;gap:2px;background:#f8f3fa;border-radius:14px;padding:10px 12px;margin-bottom:8px}
+  .upd-row span{font-size:13.5px;color:var(--soft)}
+  .upd-row b{font-size:17px;font-weight:500;color:var(--ink);line-height:1.6}
+  .upd-card .btn{display:block;width:100%;margin-top:10px;text-align:center;text-decoration:none;font-size:16px;padding:12px}
   @keyframes fade{50%{opacity:.45}}
 
   /* ---------- card ---------- */
@@ -259,6 +277,7 @@
     <div class="env-flap"></div>
     <div class="seal"><svg viewBox="0 0 200 192" aria-hidden="true"><g fill="#f3e8f8"><use href="#dal"/></g><g fill="#ffffff"><use href="#dal" transform="translate(200 0) scale(-1 1)"/></g></svg></div>
   </div>
+  <p class="upd-ribbon">📢 تم تحديث مكان وموعد الحفل</p>
   <p class="hint">اضغط لفتح الدعوة</p>
 </section>
 
@@ -316,12 +335,12 @@
     </div>
     <a class="icard venue" href="https://maps.app.goo.gl/b1a1QVcZ6QZoaZzB7" target="_blank" rel="noopener">
       <i><svg viewBox="0 0 48 48"><path d="M24 43s-13-13-13-23a13 13 0 0 1 26 0c0 10-13 23-13 23z"/><circle cx="24" cy="20" r="5"/></svg></i>
-      <div><span class="k">الصالة</span><span class="v">زين العابدين</span>
+      <div><span class="k">الصالة <em class="new">جديد</em></span><span class="v">زين العابدين</span>
         <span class="ad">ميدان أبو حبل</span></div>
     </a>
     <div class="icard">
       <i><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M24 13v11l7 5"/></svg></i>
-      <div><span class="k">موعد الحفل</span><span class="v">من 7:00 إلى 10:00</span><span class="ad">مساءً</span></div>
+      <div><span class="k">موعد الحفل <em class="new">جديد</em></span><span class="v">من 7:00 إلى 10:00</span><span class="ad">مساءً</span></div>
     </div>
   </div>
 
@@ -406,6 +425,18 @@
   <div class="chev"></div>
 </div>
 
+<div class="upd" id="upd" hidden role="dialog" aria-modal="true" aria-labelledby="updT">
+  <div class="upd-card">
+    <div class="upd-ic">📢</div>
+    <h3 id="updT">تنبيه: تحديث مهم</h3>
+    <p class="upd-sub">تم تغيير مكان وموعد الحفل</p>
+    <div class="upd-row"><span>📍 الصالة</span><b>صالة زين العابدين – ميدان أبو حبل</b></div>
+    <div class="upd-row"><span>🕐 الموعد</span><b>الاثنين 2026.11.23<br>من 7:00 إلى 10:00 مساءً</b></div>
+    <a class="btn" href="https://maps.app.goo.gl/b1a1QVcZ6QZoaZzB7" target="_blank" rel="noopener">📍 الموقع على الخريطة</a>
+    <button class="btn ghost" id="updOk">تمّ، شكرًا 💜</button>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -463,7 +494,7 @@ function heartsAt(x,y){
 }
 addEventListener('pointerdown', e=>{
   if(!intro.classList.contains('gone')) return;
-  if(e.target.closest('button,a,.btn,#game,input,textarea,.wish')) return;            // الأزرار والروابط لها وظائفها
+  if(e.target.closest('button,a,.btn,#game,input,textarea,.wish,#upd')) return;            // الأزرار والروابط لها وظائفها
   heartsAt(e.clientX,e.clientY);
   if(navigator.vibrate) try{ navigator.vibrate(8); }catch(_){}
 }, {passive:true});
@@ -540,6 +571,7 @@ function openInvite(){
   try{ actx = actx || new (window.AudioContext||window.webkitAudioContext)(); actx.resume(); }catch(e){}
   playWelcome();
   setTimeout(()=>{ intro.classList.add('gone'); burst(W/2,H*.35,120); reveal(); document.getElementById('music').style.display='grid';
+    showUpdate();
     if(location.hash==='#wish') setTimeout(()=>{ const w=document.getElementById('wish'); w.classList.add('in'); w.scrollIntoView({behavior:'smooth',block:'start'}); },900);
     setTimeout(()=>{ if(scrollY<40) hint.classList.add('show'); },2200); },1500);
 }
@@ -610,6 +642,16 @@ const WISH_ENDPOINT = 'https://formsubmit.co/ajax/Mohannad.nammous@gmail.com';  
     finally{ b.disabled=false; b.textContent='أرسل التهنئة 💌'; }
   });
 })();
+/* ===== تنبيه تحديث المكان والموعد: يظهر مرة واحدة لكل جهاز بعد فتح الظرف ===== */
+const UPD_KEY='upd-venue-2026-11-20';
+function showUpdate(){
+  let seen=false; try{ seen=localStorage.getItem(UPD_KEY)==='1'; }catch(e){}
+  if(seen) return;
+  setTimeout(()=>{ document.getElementById('upd').hidden=false; },900);
+}
+document.getElementById('updOk').onclick=()=>{
+  document.getElementById('upd').hidden=true; try{ localStorage.setItem(UPD_KEY,'1'); }catch(e){}
+};
 document.getElementById('share').onclick=async()=>{
   const data={title:'دعوة زفاف مهند ودعاء',text:'يسعدنا حضوركنّ زفاف مهند ودعاء يوم الاثنين 2026.11.23 (الحفل خاص بالسيدات) 💜',url:SHARE_URL};
   try{ if(navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(SHARE_URL); toast('تم نسخ رابط الدعوة'); } }catch(e){}
