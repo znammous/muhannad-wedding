@@ -333,7 +333,7 @@
       <i><svg viewBox="0 0 48 48"><rect x="7" y="10" width="34" height="31" rx="4"/><path d="M7 18h34M15 6v8M33 6v8"/><path d="M15 25h4M22 25h4M29 25h4M15 32h4M22 32h4M29 32h4"/></svg></i>
       <div><span class="k">التاريخ</span><span class="v">2026.11.23</span></div>
     </div>
-    <a class="icard venue" href="https://maps.app.goo.gl/b1a1QVcZ6QZoaZzB7" target="_blank" rel="noopener">
+    <a class="icard venue" href="https://maps.app.goo.gl/QHKz6oLF84WwMBf68" target="_blank" rel="noopener">
       <i><svg viewBox="0 0 48 48"><path d="M24 43s-13-13-13-23a13 13 0 0 1 26 0c0 10-13 23-13 23z"/><circle cx="24" cy="20" r="5"/></svg></i>
       <div><span class="k">الصالة <em class="new">جديد</em></span><span class="v">زين الذهبية</span>
         <span class="ad">ميدان أبو حبل، بجانب حلويات السقال</span></div>
@@ -377,7 +377,7 @@
     <button class="btn" id="celebrate">🎉 مبروك للعروسين</button>
     <button class="btn ghost" id="cal">📅 أضف للتقويم</button>
     <a class="btn ghost" id="map" target="_blank" rel="noopener"
-       href="https://maps.app.goo.gl/b1a1QVcZ6QZoaZzB7">📍 الاتجاهات للصالة</a>
+       href="https://maps.app.goo.gl/QHKz6oLF84WwMBf68">📍 الاتجاهات للصالة</a>
     <button class="btn ghost" id="share">💌 شارك الدعوة</button>
     <button class="btn" id="play">🎮 العب مع العروسين</button>
   </div>
@@ -432,7 +432,7 @@
     <p class="upd-sub">تم تغيير مكان وموعد الحفل</p>
     <div class="upd-row"><span>📍 الصالة</span><b>صالة زين الذهبية – ميدان أبو حبل، بجانب حلويات السقال</b></div>
     <div class="upd-row"><span>🕐 الموعد</span><b>الاثنين 2026.11.23<br>من 7:00 إلى 10:00 مساءً</b></div>
-    <a class="btn" href="https://maps.app.goo.gl/b1a1QVcZ6QZoaZzB7" target="_blank" rel="noopener">📍 الموقع على الخريطة</a>
+    <a class="btn" href="https://maps.app.goo.gl/QHKz6oLF84WwMBf68" target="_blank" rel="noopener">📍 الموقع على الخريطة</a>
     <button class="btn ghost" id="updOk">تمّ، شكرًا 💜</button>
   </div>
 </div>
@@ -608,13 +608,13 @@ document.getElementById('heart').onclick=e=>{ const h=e.currentTarget, r=h.getBo
 document.getElementById('cal').onclick=()=>{
   const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//wedding//invite//AR','BEGIN:VEVENT',
     'UID:muhannad-duaa-20261123','DTSTART:20261123T190000','DTEND:20261123T220000',
-    'SUMMARY:زفاف مهند ودعاء','LOCATION:صالة زين الذهبية، ميدان أبو حبل، بجانب حلويات السقال — https://maps.app.goo.gl/b1a1QVcZ6QZoaZzB7','DESCRIPTION:الحفل خاص بالسيدات، من الساعة 7:00 إلى 10:00 مساءً','END:VEVENT','END:VCALENDAR'].join('\r\n');
+    'SUMMARY:زفاف مهند ودعاء','LOCATION:صالة زين الذهبية، ميدان أبو حبل، بجانب حلويات السقال — https://maps.app.goo.gl/QHKz6oLF84WwMBf68','DESCRIPTION:الحفل خاص بالسيدات، من الساعة 7:00 إلى 10:00 مساءً','END:VEVENT','END:VCALENDAR'].join('\r\n');
   const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'})); a.download='زفاف-مهند-ودعاء.ics'; a.click();
   toast('تمت إضافة الموعد 📅');
 };
 document.getElementById('play').onclick=()=>{
   if(window.WeddingGame) return WeddingGame.open();
-  const sc=document.createElement('script'); sc.src='game.js?v=13'; sc.onload=()=>WeddingGame.open(); document.head.appendChild(sc);
+  const sc=document.createElement('script'); sc.src='game.js?v=14'; sc.onload=()=>WeddingGame.open(); document.head.appendChild(sc);
 };
 /* ===== دفتر التهاني: يُرسل كل تهنئة إلى الإيميل عبر FormSubmit ===== */
 const WISH_ENDPOINT = 'https://formsubmit.co/ajax/Mohannad.nammous@gmail.com';   // يُستبدل بالاسم المرمّز بعد التفعيل
@@ -643,7 +643,7 @@ const WISH_ENDPOINT = 'https://formsubmit.co/ajax/Mohannad.nammous@gmail.com';  
   });
 })();
 /* ===== تنبيه تحديث المكان والموعد: يظهر مرة واحدة لكل جهاز بعد فتح الظرف ===== */
-const UPD_KEY='upd-venue-2026-11-20b';
+const UPD_KEY='upd-venue-2026-11-20c';
 function showUpdate(){
   let seen=false; try{ seen=localStorage.getItem(UPD_KEY)==='1'; }catch(e){}
   if(seen) return;
