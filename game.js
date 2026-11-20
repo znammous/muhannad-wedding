@@ -111,7 +111,7 @@
         </div>
         <div class="g-remind">
           <div class="g-rt">لا تنسوا موعدنا 💜</div>
-          <div class="g-ri"><span>📅 الاثنين 2026.11.23</span><span>🕐 الحفل من 7:00 إلى 10:00 مساءً</span><span>📍 صالة زين العابدين – ميدان أبو حبل</span></div>
+          <div class="g-ri"><span>📅 الاثنين 2026.11.23</span><span>🕐 الحفل من 7:00 إلى 10:00 مساءً</span><span>📍 صالة زين الذهبية – ميدان أبو حبل، بجانب حلويات السقال</span></div>
           <div class="g-rd" id="g-rd"></div>
           <div class="g-rb"><button class="ghost" id="g-cal">أضف للتقويم</button><a class="ghost" id="g-map" href="https://maps.app.goo.gl/b1a1QVcZ6QZoaZzB7" target="_blank" rel="noopener">الاتجاهات للصالة</a></div>
         </div>
